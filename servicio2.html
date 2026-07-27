@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pérez & Asoc. | Estudio Notarial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#D32F2F',
+                        dark: '#0A0A0A',
+                        black: '#000000',
+                        grayLight: '#F5F5F5',
+                        grayText: '#6B6B6B',
+                    },
+                    fontFamily: {
+                        'serif': ['Playfair Display', 'serif'],
+                        'sans': ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #000000;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #D32F2F;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        .service-card-overlay {
+            background: linear-gradient(135deg, rgba(211, 47, 47, 0.92) 0%, rgba(211, 47, 47, 0.85) 100%);
+            transition: all 0.4s ease;
+        }
+        .service-card:hover .service-card-overlay {
+            background: linear-gradient(135deg, rgba(211, 47, 47, 0.98) 0%, rgba(211, 47, 47, 0.92) 100%);
+        }
+        .btn-primary {
+            background-color: #D32F2F;
+            color: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 1px;
+        }
+        .btn-primary:hover {
+            background-color: #B71C1C;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.4);
+        }
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        .btn-secondary {
+            border: 2px solid white;
+            color: white;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+        .btn-secondary:hover {
+            background-color: white;
+            color: #D32F2F;
+        }
+        .icon-box {
+            transition: all 0.3s ease;
+        }
+        .icon-box:hover {
+            transform: translateY(-8px);
+        }
+        .input-field {
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            border-color: #D32F2F;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+        }
+        .input-error {
+            border-color: #D32F2F !important;
+        }
+        .team-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .team-card:hover .team-img {
+            transform: scale(1.05);
+        }
+        .team-img {
+            transition: transform 0.4s ease;
+        }
+        .service-detail {
+            scroll-margin-top: 100px;
+        }
+        @media (max-width: 390px) {
+            .service-card {
+                height: 320px;
+            }
+        }
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            z-index: 100;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .whatsapp-float:hover {
+            background-color: #20BA5A;
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+        }
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                width: 56px;
+                height: 56px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Top Bar -->
+    <div class="bg-dark text-white py-2.5 hidden md:block">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center text-sm">
+                <div class="flex items-center space-x-6">
+                    <a href="mailto:estudio@pereznotarial.com" class="flex items-center hover:text-primary transition-colors">
+                        <i class="fa-solid fa-envelope mr-2 text-primary"></i>
+                        <span>estudio@pereznotarial.com</span>
+                    </a>
+                    <a href="tel:+541143000000" class="flex items-center hover:text-primary transition-colors">
+                        <i class="fa-solid fa-phone mr-2 text-primary"></i>
+                        <span>+54 11 4300-0000</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="hover:text-primary transition-colors"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#" class="hover:text-primary transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-primary transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <header id="navbar" class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                <div class="hidden md:flex items-center space-x-8 flex-1">
+                    <a href="#inicio" class="nav-link text-sm font-medium uppercase tracking-wider">Inicio</a>
+                    <a href="#servicios" class="nav-link text-sm font-medium uppercase tracking-wider">Servicios</a>
+                    <a href="#estudio" class="nav-link text-sm font-medium uppercase tracking-wider">El Estudio</a>
+                </div>
+
+                <div class="flex items-center flex-1 md:justify-center">
+                    <a href="#inicio" class="text-3xl md:text-4xl font-serif font-bold text-black tracking-tight">
+                        Pérez <span class="text-primary">&</span> Asoc.
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center justify-end space-x-8 flex-1">
+                    <a href="#equipo" class="nav-link text-sm font-medium uppercase tracking-wider">Equipo</a>
+                    <a href="#testimonios" class="nav-link text-sm font-medium uppercase tracking-wider">Testimonios</a>
+                    <a href="#contacto" class="nav-link text-sm font-medium uppercase tracking-wider">Contacto</a>
+                    <a href="#contacto" class="btn-primary px-6 py-3 text-xs font-semibold uppercase">
+                        Consulta Gratis
+                    </a>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-black focus:outline-none">
+                    <i id="menu-icon" class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="#inicio" class="block py-3 text-base font-medium text-black hover:text-primary uppercase tracking-wider">Inicio</a>
+                <a href="#servicios" class="block py-3 text-base font-medium text-black hover:text-primary uppercase tracking-wider">Servicios</a>
+                <a href="#estudio" class="block py-3 text-base font-medium text-black hover:text-primary uppercase tracking-wider">El Estudio</a>
+                <a href="#equipo" class="block py-3 text-base font-medium text-black hover:text-primary uppercase tracking-wider">Equipo</a>
+                <a href="#testimonios" class="block py-3 text-base font-medium text-black hover:text-primary uppercase tracking-wider">Testimonios</a>
+                <a href="#contacto" class="block py-3 text-base font-medium text-black hover:text-primary uppercase tracking-wider">Contacto</a>
+                <a href="#contacto" class="block mt-4 btn-primary px-6 py-3 text-sm font-semibold uppercase text-center">
+                    Consulta Gratis
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="inicio" class="relative h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop" 
+                 alt="Columnas de justicia" 
+                 class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black opacity-70"></div>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white leading-tight mb-6">
+                Pérez & Asoc.
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto font-light">
+                Seguridad jurídica y confianza en cada acto. Más de 25 años brindando asesoramiento notarial integral.
+            </p>
+            <a href="#servicios" class="btn-primary px-10 py-4 text-sm font-semibold uppercase inline-block">
+                LEARN MORE
+            </a>
+        </div>
+    </section>
+
+    <!-- Servicios Tipo 1 - Iconos -->
+    <section class="py-20 md:py-28 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+                <div class="icon-box text-center">
+                    <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                        <i class="fa-solid fa-scale-balanced text-primary text-5xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif text-white mb-4">Experiencia Legal</h3>
+                    <p class="text-grayText leading-relaxed">
+                        Más de 25 años de trayectoria en derecho notarial con miles de operaciones exitosas.
+                    </p>
+                </div>
+
+                <div class="icon-box text-center">
+                    <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                        <i class="fa-solid fa-handshake text-primary text-5xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif text-white mb-4">Confianza Total</h3>
+                    <p class="text-grayText leading-relaxed">
+                        Secreto profesional y confidencialidad absoluta en todos los actos jurídicos que realizamos.
+                    </p>
+                </div>
+
+                <div class="icon-box text-center">
+                    <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                        <i class="fa-solid fa-user-tie text-primary text-5xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif text-white mb-4">Atención Personal</h3>
+                    <p class="text-grayText leading-relaxed">
+                        Cada cliente recibe asesoramiento personalizado y seguimiento cercano en su caso.
+                    </p>
+                </div>
+
+                <div class="icon-box text-center">
+                    <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                        <i class="fa-solid fa-gavel text-primary text-5xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif text-white mb-4">Rigor Técnico</h3>
+                    <p class="text-grayText leading-relaxed">
+                        Actualización permanente y máximo rigor en cada escritura para su plena validez legal.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servicios Tipo 2 - Cards con Imagen -->
+    <section id="servicios" class="py-20 md:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <p class="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Nuestros Servicios</p>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-black mb-4">
+                    Asesoramiento Notarial Especializado
+                </h2>
+                <p class="text-lg text-grayText">
+                    Brindamos soluciones jurídicas personalizadas con el máximo rigor técnico en cada actuación.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Servicio 1 -->
+                <a href="#servicio-escrituras" class="service-card relative h-96 overflow-hidden group cursor-pointer block">
+                    <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop" 
+                         alt="Escrituras Públicas" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="service-card-overlay absolute inset-0 p-8 flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-file-signature text-white text-5xl mb-6"></i>
+                        <h3 class="text-3xl font-serif font-bold text-white mb-4">Escrituras Públicas</h3>
+                        <p class="text-gray-100 leading-relaxed">
+                            Compraventas, donaciones, hipotecas y todo tipo de actos jurídicos con plena validez legal y registral.
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Servicio 2 -->
+                <a href="#servicio-testamentos" class="service-card relative h-96 overflow-hidden group cursor-pointer block">
+                    <img src="https://images.unsplash.com/photo-1436450412740-6b988f486c6b?q=80&w=2070&auto=format&fit=crop" 
+                         alt="Testamentos y Sucesiones" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="service-card-overlay absolute inset-0 p-8 flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-scale-balanced text-white text-5xl mb-6"></i>
+                        <h3 class="text-3xl font-serif font-bold text-white mb-4">Testamentos y Sucesiones</h3>
+                        <p class="text-gray-100 leading-relaxed">
+                            Planificación sucesoria, testamentos ológrafos y notariales. Trámites de declaratoria de herederos.
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Servicio 3 -->
+                <a href="#servicio-poderes" class="service-card relative h-96 overflow-hidden group cursor-pointer block">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=2069&auto=format&fit=crop" 
+                         alt="Poderes y Mandatos" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="service-card-overlay absolute inset-0 p-8 flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-handshake text-white text-5xl mb-6"></i>
+                        <h3 class="text-3xl font-serif font-bold text-white mb-4">Poderes y Mandatos</h3>
+                        <p class="text-gray-100 leading-relaxed">
+                            Poderes generales y especiales, para administración, disposición de bienes o representación judicial.
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Servicio 4 -->
+                <a href="#servicio-actas" class="service-card relative h-96 overflow-hidden group cursor-pointer block">
+                    <img src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?q=80&w=2070&auto=format&fit=crop" 
+                         alt="Actas y Certificaciones" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="service-card-overlay absolute inset-0 p-8 flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-stamp text-white text-5xl mb-6"></i>
+                        <h3 class="text-3xl font-serif font-bold text-white mb-4">Actas y Certificaciones</h3>
+                        <p class="text-gray-100 leading-relaxed">
+                            Certificación de firmas, copias certificadas, actas de constatación y manifestaciones.
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Servicio 5 -->
+                <a href="#servicio-empresarial" class="service-card relative h-96 overflow-hidden group cursor-pointer block">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" 
+                         alt="Asesoramiento Empresarial" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="service-card-overlay absolute inset-0 p-8 flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-building text-white text-5xl mb-6"></i>
+                        <h3 class="text-3xl font-serif font-bold text-white mb-4">Asesoramiento Empresarial</h3>
+                        <p class="text-gray-100 leading-relaxed">
+                            Constitución de sociedades, reformas estatutarias, actas de asamblea y libros societarios.
+                        </p>
+                    </div>
+                </a>
+
+                <!-- Servicio 6 -->
+                <a href="#servicio-voluntad" class="service-card relative h-96 overflow-hidden group cursor-pointer block">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop" 
+                         alt="Actos de Última Voluntad" 
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="service-card-overlay absolute inset-0 p-8 flex flex-col justify-center items-center text-center">
+                        <i class="fa-solid fa-heart-pulse text-white text-5xl mb-6"></i>
+                        <h3 class="text-3xl font-serif font-bold text-white mb-4">Actos de Última Voluntad</h3>
+                        <p class="text-gray-100 leading-relaxed">
+                            Directivas anticipadas, designación de curadores y disposiciones sobre bienes y persona.
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servicios - Detalles con Profundidad -->
+    <section class="py-20 md:py-28 bg-grayLight">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+            <!-- Servicio 1 Detalle -->
+            <div id="servicio-escrituras" class="service-detail bg-white p-8 md:p-12 shadow-lg">
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div>
+                        <div class="flex items-center mb-6">
+                            <i class="fa-solid fa-file-signature text-primary text-4xl mr-4"></i>
+                            <h3 class="text-3xl md:text-4xl font-serif font-bold text-black">Escrituras Públicas</h3>
+                        </div>
+                        <div class="space-y-4 text-grayText leading-relaxed mb-8">
+                            <p>
+                                La escritura pública es el instrumento notarial por excelencia que otorga autenticidad, fecha cierta y plena validez legal a los actos jurídicos más trascendentes de las personas y empresas.
+                            </p>
+                            <p>
+                                Se requiere especialmente en compraventas de inmuebles, constitución de hipotecas, donaciones de bienes registrables, constitución de sociedades y cualquier acto que deba inscribirse en registros públicos para ser oponible a terceros.
+                            </p>
+                            <p>
+                                Nuestro proceso incluye: entrevista inicial de análisis, estudio de títulos, confección del proyecto, lectura y explicación detallada, firma ante escribano y posterior inscripción registral.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-4">
+                            <button class="btn-primary px-6 py-3 text-sm font-semibold uppercase inline-flex items-center">
+                                <i class="fa-solid fa-download mr-2"></i>Descargar Modelo PDF
+                            </button>
+                            <a href="#contacto" class="bg-black text-white px-6 py-3 text-sm font-semibold uppercase inline-flex items-center hover:bg-dark transition-colors">
+                                Consultar por este servicio
+                            </a>
+                        </div>
+                    </div>
+                    <div class="space-y-8">
+                        <div class="bg-grayLight p-6">
+                            <h4 class="text-xl font-serif font-bold text-black mb-4 flex items-center">
+                                <i class="fa-solid fa-list-check text-primary mr-3"></i>Requisitos
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-check text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>DNI vigente de todos los otorgantes</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-check text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Constancia de CUIT/CUIL</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-check text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Certificado de domicilio actualizado</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-check text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Estado civil acreditado</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-grayLight p-6">
+                            <h4 class="text-xl font-serif font-bold text-black mb-4 flex items-center">
+                                <i class="fa-solid fa-folder-open text-primary mr-3"></i>Documentación Necesaria
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-file text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Título de propiedad del inmueble</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-file text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Boletos o compromisos previos</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-file text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Certificados de libre deuda municipal y ARBA</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-file text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Plano de mensura actualizado</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Servicio 2 Detalle -->
+            <div id="servicio-testamentos" class="service-detail bg-white p-8 md:p-12 shadow-lg">
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div>
+                        <div class="flex items-center mb-6">
+                            <i class="fa-solid fa-scale-balanced text-primary text-4xl mr-4"></i>
+                            <h3 class="text-3xl md:text-4xl font-serif font-bold text-black">Testamentos y Sucesiones</h3>
+                        </div>
+                        <div class="space-y-4 text-grayText leading-relaxed mb-8">
+                            <p>
+                                La planificación sucesoria mediante testamento permite disponer libremente de los bienes para después del fallecimiento, dentro de los límites que establece la ley respecto de la legítima de los herederos forzosos.
+                            </p>
+                            <p>
+                                Es recomendable cuando se desea beneficiar especialmente a algún heredero, designar albacea, reconocer hijos, o distribuir bienes de forma diferente a lo establecido por ley. También en casos de familias ensambladas o patrimonios complejos.
+                            </p>
+                            <p>
+                                Ofrecemos testamentos por acto público ante escribano, testamentos ológrafos con asesoramiento, y gestión integral del proceso sucesorio judicial con declaratoria de herederos.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-4">
+                            <button class="btn-primary px-6 py-3 text-sm font-semibold uppercase inline-flex items-center">
+                                <i class="fa-solid fa-download mr-2"></i>Descargar Modelo PDF
+                            </button>
+                            <a href="#contacto" class="bg-black text-white px-6 py-3 text-sm font-semibold uppercase inline-flex items-center hover:bg-dark transition-colors">
+                                Consultar por este servicio
+                            </a>
+                        </div>
+                    </div>
+                    <div class="space-y-8">
+                        <div class="bg-grayLight p-6">
+                            <h4 class="text-xl font-serif font-bold text-black mb-4 flex items-center">
+                                <i class="fa-solid fa-list-check text-primary mr-3"></i>Requisitos
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-check text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Ser mayor de 18 años</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-check text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Plena capacidad mental</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-check text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>DNI vigente</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-check text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Dos testigos hábiles si corresponde</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-grayLight p-6">
+                            <h4 class="text-xl font-serif font-bold text-black mb-4 flex items-center">
+                                <i class="fa-solid fa-folder-open text-primary mr-3"></i>Documentación Necesaria
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-file text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Inventario de bienes y activos</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-file text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Datos de herederos y legatarios</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-file text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Títulos de propiedad</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-file text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Partidas de nacimiento y matrimonio</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Servicio 3 Detalle -->
+            <div id="servicio-poderes" class="service-detail bg-white p-8 md:p-12 shadow-lg">
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div>
+                        <div class="flex items-center mb-6">
+                            <i class="fa-solid fa-handshake text-primary text-4xl mr-4"></i>
+                            <h3 class="text-3xl md:text-4xl font-serif font-bold text-black">Poderes y Mandatos</h3>
+                        </div>
+                        <div class="space-y-4 text-grayText leading-relaxed mb-8">
+                            <p>
+                                El poder es el acto jurídico mediante el cual una persona (poderdante) otorga a otra (apoderado) la facultad de actuar en su nombre y representación para realizar determinados actos jurídicos.
+                            </p>
+                            <p>
+                                Resulta necesario cuando no se puede estar presente para firmar, por viajes, enfermedad, residencia en el exterior, o para delegar la administración de bienes o empresas. Existen poderes generales de administración y especiales para actos específicos.
+                            </p>
+                            <p>
+                                Asesoramos sobre el tipo de poder más conveniente, su alcance y limitaciones. Otorgamos poderes con vigencia nacional e internacional, con apostilla de La Haya cuando corresponda.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap gap-4">
+                            <button class="btn-primary px-6 py-3 text-sm font-semibold uppercase inline-flex items-center">
+                                <i class="fa-solid fa-download mr-2"></i>Descargar Modelo PDF
+                            </button>
+                            <a href="#contacto" class="bg-black text-white px-6 py-3 text-sm font-semibold uppercase inline-flex items-center hover:bg-dark transition-colors">
+                                Consultar por este servicio
+                            </a>
+                        </div>
+                    </div>
+                    <div class="space-y-8">
+                        <div class="bg-grayLight p-6">
+                            <h4 class="text-xl font-serif font-bold text-black mb-4 flex items-center">
+                                <i class="fa-solid fa-list-check text-primary mr-3"></i>Requisitos
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-check text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>DNI de poderdante y apoderado</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-check text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Capacidad legal plena</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-check text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Definir claramente las facultades</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-check text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Presencia del poderdante ante escribano</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="bg-grayLight p-6">
+                            <h4 class="text-xl font-serif font-bold text-black mb-4 flex items-center">
+                                <i class="fa-solid fa-folder-open text-primary mr-3"></i>Documentación Necesaria
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-file text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Documentación de los bienes involucrados</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-file text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Detalle de facultades a otorgar</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-file text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Datos completos del apoderado</span>
+                                </li>
+                                <li class="flex items-start text-grayText">
+                                    <i class="fa-solid fa-file text-primary mr-3 mt-1 text-sm"></i>
+                                    <span>Poder anterior para revocar si existe</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Servicio 4, 5, 6 pueden seguir el mismo patrón - simplificado por espacio -->
+            <div id="servicio-actas" class="service-detail bg-white p-8 md:p-12 shadow-lg">
+                <div class="flex items-center mb-6">
+                    <i class="fa-solid fa-stamp text-primary text-4xl mr-4"></i>
+                    <h3 class="text-3xl md:text-4xl font-serif font-bold text-black">Actas y Certificaciones</h3>
+                </div>
+                <p class="text-grayText leading-relaxed mb-6">
+                    Certificación de firmas en documentos privados, copias certificadas de instrumentos públicos y privados, actas de constatación de hechos, manifestaciones ante escribano, y certificaciones de supervivencia. Brindamos celeridad y seguridad jurídica en todos los trámites.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button class="btn-primary px-6 py-3 text-sm font-semibold uppercase inline-flex items-center">
+                        <i class="fa-solid fa-download mr-2"></i>Descargar Modelo PDF
+                    </button>
+                    <a href="#contacto" class="bg-black text-white px-6 py-3 text-sm font-semibold uppercase inline-flex items-center hover:bg-dark transition-colors">
+                        Consultar por este servicio
+                    </a>
+                </div>
+            </div>
+
+            <div id="servicio-empresarial" class="service-detail bg-white p-8 md:p-12 shadow-lg">
+                <div class="flex items-center mb-6">
+                    <i class="fa-solid fa-building text-primary text-4xl mr-4"></i>
+                    <h3 class="text-3xl md:text-4xl font-serif font-bold text-black">Asesoramiento Empresarial</h3>
+                </div>
+                <p class="text-grayText leading-relaxed mb-6">
+                    Constitución de sociedades (SA, SRL, SAS), reformas estatutarias, aumentos de capital, actas de asamblea y directorio, libros societarios rubricados, disolución y liquidación. Asesoramiento integral para emprendedores y empresas consolidadas.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button class="btn-primary px-6 py-3 text-sm font-semibold uppercase inline-flex items-center">
+                        <i class="fa-solid fa-download mr-2"></i>Descargar Modelo PDF
+                    </button>
+                    <a href="#contacto" class="bg-black text-white px-6 py-3 text-sm font-semibold uppercase inline-flex items-center hover:bg-dark transition-colors">
+                        Consultar por este servicio
+                    </a>
+                </div>
+            </div>
+
+            <div id="servicio-voluntad" class="service-detail bg-white p-8 md:p-12 shadow-lg">
+                <div class="flex items-center mb-6">
+                    <i class="fa-solid fa-heart-pulse text-primary text-4xl mr-4"></i>
+                    <h3 class="text-3xl md:text-4xl font-serif font-bold text-black">Actos de Última Voluntad</h3>
+                </div>
+                <p class="text-grayText leading-relaxed mb-6">
+                    Directivas anticipadas en salud, designación de curadores para el futuro, disposiciones sobre donación de órganos, y declaraciones de voluntad sobre tratamientos médicos. Instrumentos que garantizan el respeto de sus decisiones personales.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button class="btn-primary px-6 py-3 text-sm font-semibold uppercase inline-flex items-center">
+                        <i class="fa-solid fa-download mr-2"></i>Descargar Modelo PDF
+                    </button>
+                    <a href="#contacto" class="bg-black text-white px-6 py-3 text-sm font-semibold uppercase inline-flex items-center hover:bg-dark transition-colors">
+                        Consultar por este servicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Nosotros -->
+    <section id="estudio" class="py-20 md:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <div class="order-2 lg:order-1">
+                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2132&auto=format&fit=crop" 
+                         alt="Equipo de Pérez & Asoc." 
+                         class="w-full h-auto object-cover">
+                </div>
+                <div class="order-1 lg:order-2">
+                    <p class="text-sm font-semibold text-primary uppercase tracking-wider mb-3">El Estudio</p>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-black mb-6">
+                        Trayectoria, seriedad y compromiso profesional
+                    </h2>
+                    <div class="space-y-4 text-grayText leading-relaxed mb-8">
+                        <p>
+                            Fundado en 1998 por el Esc. Martín Pérez, nuestro estudio se ha consolidado como referente en materia notarial gracias a una práctica profesional basada en la ética, la actualización permanente y la atención personalizada.
+                        </p>
+                        <p>
+                            Somos un equipo de profesionales especializados en distintas áreas del derecho notarial. Entendemos que cada acto jurídico representa un momento trascendental en la vida de nuestros clientes, por eso brindamos un servicio cercano, claro y eficiente.
+                        </p>
+                        <p>
+                            Trabajamos con tecnología de gestión documental que nos permite optimizar tiempos sin resignar la seguridad jurídica que caracteriza a la función notarial.
+                        </p>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-6 pt-8 border-t border-gray-300">
+                        <div>
+                            <p class="text-4xl font-serif font-bold text-primary">25+</p>
+                            <p class="text-sm text-grayText mt-2">Años de experiencia</p>
+                        </div>
+                        <div>
+                            <p class="text-4xl font-serif font-bold text-primary">12K+</p>
+                            <p class="text-sm text-grayText mt-2">Escrituras otorgadas</p>
+                        </div>
+                        <div>
+                            <p class="text-4xl font-serif font-bold text-primary">98%</p>
+                            <p class="text-sm text-grayText mt-2">Clientes satisfechos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NUESTRO EQUIPO -->
+    <section id="equipo" class="py-20 md:py-28 bg-grayLight">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <p class="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Nuestro Equipo</p>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-black mb-4">
+                    Profesionales de excelencia a su servicio
+                </h2>
+                <p class="text-lg text-grayText">
+                    Un equipo especializado con amplia trayectoria en derecho notarial y compromiso con cada cliente.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+                <!-- Miembro 1 -->
+                <div class="team-card bg-white overflow-hidden">
+                    <div class="overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop" 
+                             alt="Dr. Juan Pérez" 
+                             class="team-img w-full h-96 object-cover">
+                    </div>
+                    <div class="p-8 text-center">
+                        <h3 class="text-2xl font-serif font-bold text-black mb-2">Dr. Juan Pérez</h3>
+                        <p class="text-primary font-semibold mb-4 uppercase text-sm tracking-wider">Escribano Titular</p>
+                        <div class="space-y-2 mb-6 text-grayText">
+                            <p class="flex items-center justify-center text-sm">
+                                <i class="fa-solid fa-id-card text-primary mr-2"></i>Mat. 1234
+                            </p>
+                            <p class="flex items-center justify-center text-sm">
+                                <i class="fa-solid fa-briefcase text-primary mr-2"></i>25 años de experiencia
+                            </p>
+                            <p class="flex items-center justify-center text-sm">
+                                <i class="fa-solid fa-star text-primary mr-2"></i>Especialista en Derecho Inmobiliario
+                            </p>
+                        </div>
+                        <a href="#contacto" class="btn-primary px-6 py-3 text-xs font-semibold uppercase inline-block">
+                            Agendar consulta
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Miembro 2 -->
+                <div class="team-card bg-white overflow-hidden">
+                    <div class="overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1976&auto=format&fit=crop" 
+                             alt="Dra. María González" 
+                             class="team-img w-full h-96 object-cover">
+                    </div>
+                    <div class="p-8 text-center">
+                        <h3 class="text-2xl font-serif font-bold text-black mb-2">Dra. María González</h3>
+                        <p class="text-primary font-semibold mb-4 uppercase text-sm tracking-wider">Escribana Adscripta</p>
+                        <div class="space-y-2 mb-6 text-grayText">
+                            <p class="flex items-center justify-center text-sm">
+                                <i class="fa-solid fa-id-card text-primary mr-2"></i>Mat. 2156
+                            </p>
+                            <p class="flex items-center justify-center text-sm">
+                                <i class="fa-solid fa-briefcase text-primary mr-2"></i>18 años de experiencia
+                            </p>
+                            <p class="flex items-center justify-center text-sm">
+                                <i class="fa-solid fa-star text-primary mr-2"></i>Especialista en Sucesiones
+                            </p>
+                        </div>
+                        <a href="#contacto" class="btn-primary px-6 py-3 text-xs font-semibold uppercase inline-block">
+                            Agendar consulta
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Miembro 3 -->
+                <div class="team-card bg-white overflow-hidden">
+                    <div class="overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=2070&auto=format&fit=crop" 
+                             alt="Dr. Carlos López" 
+                             class="team-img w-full h-96 object-cover">
+                    </div>
+                    <div class="p-8 text-center">
+                        <h3 class="text-2xl font-serif font-bold text-black mb-2">Dr. Carlos López</h3>
+                        <p class="text-primary font-semibold mb-4 uppercase text-sm tracking-wider">Asesor Legal</p>
+                        <div class="space-y-2 mb-6 text-grayText">
+                            <p class="flex items-center justify-center text-sm">
+                                <i class="fa-solid fa-id-card text-primary mr-2"></i>Mat. 3498
+                            </p>
+                            <p class="flex items-center justify-center text-sm">
+                                <i class="fa-solid fa-briefcase text-primary mr-2"></i>15 años de experiencia
+                            </p>
+                            <p class="flex items-center justify-center text-sm">
+                                <i class="fa-solid fa-star text-primary mr-2"></i>Especialista en Derecho Societario
+                            </p>
+                        </div>
+                        <a href="#contacto" class="btn-primary px-6 py-3 text-xs font-semibold uppercase inline-block">
+                            Agendar consulta
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section id="testimonios" class="py-20 md:py-28 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <p class="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Testimonios</p>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-black mb-4">
+                    La confianza de quienes nos eligen
+                </h2>
+                <p class="text-lg text-grayText">
+                    Nuestro mayor respaldo es la satisfacción y recomendación de nuestros clientes.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-grayLight p-8">
+                    <div class="flex items-center mb-6">
+                        <i class="fa-solid fa-quote-left text-primary text-3xl"></i>
+                    </div>
+                    <p class="text-grayText leading-relaxed mb-6 italic">
+                        "Excelente atención y profesionalismo. Me asesoraron en la compra de mi primera casa con total claridad y paciencia. Recomiendo 100% al estudio."
+                    </p>
+                    <div class="flex items-center pt-6 border-t border-gray-300">
+                        <div class="w-12 h-12 bg-primary text-white flex items-center justify-center font-serif font-bold mr-4">
+                            MC
+                        </div>
+                        <div>
+                            <p class="font-semibold text-black">María Castellano</p>
+                            <p class="text-sm text-grayText">Particular</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-grayLight p-8">
+                    <div class="flex items-center mb-6">
+                        <i class="fa-solid fa-quote-left text-primary text-3xl"></i>
+                    </div>
+                    <p class="text-grayText leading-relaxed mb-6 italic">
+                        "Trabajamos con Pérez & Asoc. hace más de 10 años para todas las operaciones societarias de nuestra empresa. Seriedad y eficiencia garantizada."
+                    </p>
+                    <div class="flex items-center pt-6 border-t border-gray-300">
+                        <div class="w-12 h-12 bg-primary text-white flex items-center justify-center font-serif font-bold mr-4">
+                            JR
+                        </div>
+                        <div>
+                            <p class="font-semibold text-black">Javier Rodríguez</p>
+                            <p class="text-sm text-grayText">Director, Constructora del Sur SA</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-grayLight p-8">
+                    <div class="flex items-center mb-6">
+                        <i class="fa-solid fa-quote-left text-primary text-3xl"></i>
+                    </div>
+                    <p class="text-grayText leading-relaxed mb-6 italic">
+                        "Me ayudaron con el testamento y la planificación sucesoria familiar. Un tema delicado que trataron con mucho respeto y profesionalismo."
+                    </p>
+                    <div class="flex items-center pt-6 border-t border-gray-300">
+                        <div class="w-12 h-12 bg-primary text-white flex items-center justify-center font-serif font-bold mr-4">
+                            AF
+                        </div>
+                        <div>
+                            <p class="font-semibold text-black">Ana Fernández</p>
+                            <p class="text-sm text-grayText">Particular</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Contacto Premium -->
+    <section id="contacto" class="relative py-20 md:py-28 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop&blur=10" 
+                 alt="Background" 
+                 class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black opacity-80"></div>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6">
+                    Don't hesitate to ask
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                    Contáctenos para una consulta sin cargo. Analizaremos su caso y le brindaremos las opciones jurídicas más convenientes para proteger su patrimonio.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+                <!-- Formulario -->
+                <div class="bg-white p-8 md:p-10">
+                    <h3 class="text-2xl font-serif font-bold text-black mb-6">Solicite su consulta</h3>
+                    <form id="contact-form" class="space-y-5" novalidate>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Nombre completo *</label>
+                            <input type="text" 
+                                   id="nombre"
+                                   placeholder="Juan Pérez" 
+                                   class="input-field w-full px-4 py-4 border border-gray-300 text-black placeholder-gray-400"
+                                   required>
+                            <span class="text-primary text-xs mt-1 hidden" id="error-nombre">Por favor ingrese su nombre</span>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                            <input type="email" 
+                                   id="email"
+                                   placeholder="juan@ejemplo.com" 
+                                   class="input-field w-full px-4 py-4 border border-gray-300 text-black placeholder-gray-400"
+                                   required>
+                            <span class="text-primary text-xs mt-1 hidden" id="error-email">Por favor ingrese un email válido</span>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Teléfono *</label>
+                            <input type="tel" 
+                                   id="telefono"
+                                   placeholder="+54 11 1234-5678" 
+                                   class="input-field w-full px-4 py-4 border border-gray-300 text-black placeholder-gray-400"
+                                   required>
+                            <span class="text-primary text-xs mt-1 hidden" id="error-telefono">Por favor ingrese su teléfono</span>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Servicio de interés *</label>
+                            <select id="servicio" 
+                                    class="input-field w-full px-4 py-4 border border-gray-300 text-black bg-white"
+                                    required>
+                                <option value="">Seleccione un servicio</option>
+                                <option value="escrituras">Escrituras Públicas</option>
+                                <option value="testamentos">Testamentos y Sucesiones</option>
+                                <option value="poderes">Poderes y Mandatos</option>
+                                <option value="actas">Actas y Certificaciones</option>
+                                <option value="empresarial">Asesoramiento Empresarial</option>
+                                <option value="voluntad">Actos de Última Voluntad</option>
+                                <option value="otro">Otro / Consulta General</option>
+                            </select>
+                            <span class="text-primary text-xs mt-1 hidden" id="error-servicio">Por favor seleccione un servicio</span>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Mensaje *</label>
+                            <textarea id="mensaje"
+                                      rows="4" 
+                                      placeholder="Cuéntenos brevemente su consulta..." 
+                                      class="input-field w-full px-4 py-4 border border-gray-300 text-black placeholder-gray-400 resize-none"
+                                      required></textarea>
+                            <span class="text-primary text-xs mt-1 hidden" id="error-mensaje">Por favor ingrese su mensaje</span>
+                        </div>
+                        <button type="submit" class="btn-primary w-full py-4 text-sm font-semibold uppercase">
+                            Enviar consulta
+                        </button>
+                    </form>
+                    <div id="form-message" class="hidden mt-4 p-4 text-center rounded"></div>
+                </div>
+
+                <!-- Info + Mapa -->
+                <div class="space-y-8">
+                    <div class="text-white space-y-6">
+                        <div class="flex items-start">
+                            <i class="fa-solid fa-location-dot text-primary text-xl mt-1 mr-4"></i>
+                            <div>
+                                <p class="font-semibold text-lg">Dirección</p>
+                                <p class="text-gray-300">Av. Corrientes 1234, Piso 8<br>CABA, Argentina</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa-solid fa-phone text-primary text-xl mt-1 mr-4"></i>
+                            <div>
+                                <p class="font-semibold text-lg">Teléfono</p>
+                                <p class="text-gray-300">+54 11 4300-0000</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa-solid fa-envelope text-primary text-xl mt-1 mr-4"></i>
+                            <div>
+                                <p class="font-semibold text-lg">Email</p>
+                                <p class="text-gray-300">estudio@pereznotarial.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fa-solid fa-clock text-primary text-xl mt-1 mr-4"></i>
+                            <div>
+                                <p class="font-semibold text-lg">Horario</p>
+                                <p class="text-gray-300">Lun a Vie: 9:00 - 17:00 hs</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mapa Google Embebido -->
+                    <div class="bg-white p-2">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.0168881863!2d-58.384145323461!3d-34.603734457497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccacf425a4a19%3A0xaf19ab4e8b0e6c13!2sAv.%20Corrientes%201234%2C%20C1043AAZ%20Cdad.%20Aut%C3%B3noma%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1720123456789!5m2!1ses-419!2sar"
+                            width="100%" 
+                            height="350" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Ubicación Pérez & Asoc.">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- Columna 1: Info -->
+                <div>
+                    <h3 class="text-2xl font-serif font-bold mb-4">
+                        Pérez <span class="text-primary">&</span> Asoc.
+                    </h3>
+                    <p class="text-sm text-gray-400 leading-relaxed mb-6">
+                        Estudio notarial con más de 25 años de trayectoria brindando seguridad jurídica y asesoramiento integral.
+                    </p>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors">
+                            <i class="fa-brands fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna 2: Servicios -->
+                <div>
+                    <h4 class="text-lg font-serif font-bold mb-6">Servicios</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#servicio-escrituras" class="text-sm text-gray-400 hover:text-primary transition-colors flex items-center"><i class="fa-solid fa-angle-right text-primary mr-2 text-xs"></i>Escrituras Públicas</a></li>
+                        <li><a href="#servicio-testamentos" class="text-sm text-gray-400 hover:text-primary transition-colors flex items-center"><i class="fa-solid fa-angle-right text-primary mr-2 text-xs"></i>Testamentos y Sucesiones</a></li>
+                        <li><a href="#servicio-poderes" class="text-sm text-gray-400 hover:text-primary transition-colors flex items-center"><i class="fa-solid fa-angle-right text-primary mr-2 text-xs"></i>Poderes y Mandatos</a></li>
+                        <li><a href="#servicio-actas" class="text-sm text-gray-400 hover:text-primary transition-colors flex items-center"><i class="fa-solid fa-angle-right text-primary mr-2 text-xs"></i>Actas y Certificaciones</a></li>
+                        <li><a href="#servicio-empresarial" class="text-sm text-gray-400 hover:text-primary transition-colors flex items-center"><i class="fa-solid fa-angle-right text-primary mr-2 text-xs"></i>Asesoramiento Empresarial</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 3: Enlaces -->
+                <div>
+                    <h4 class="text-lg font-serif font-bold mb-6">Enlaces útiles</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#estudio" class="text-sm text-gray-400 hover:text-primary transition-colors flex items-center"><i class="fa-solid fa-angle-right text-primary mr-2 text-xs"></i>Sobre el Estudio</a></li>
+                        <li><a href="#equipo" class="text-sm text-gray-400 hover:text-primary transition-colors flex items-center"><i class="fa-solid fa-angle-right text-primary mr-2 text-xs"></i>Nuestro Equipo</a></li>
+                        <li><a href="#testimonios" class="text-sm text-gray-400 hover:text-primary transition-colors flex items-center"><i class="fa-solid fa-angle-right text-primary mr-2 text-xs"></i>Testimonios</a></li>
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-primary transition-colors flex items-center"><i class="fa-solid fa-angle-right text-primary mr-2 text-xs"></i>Política de Privacidad</a></li>
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-primary transition-colors flex items-center"><i class="fa-solid fa-angle-right text-primary mr-2 text-xs"></i>Términos y Condiciones</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 4: Contacto -->
+                <div>
+                    <h4 class="text-lg font-serif font-bold mb-6">Contacto</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-location-dot text-primary mt-1 mr-3"></i>
+                            <span class="text-sm text-gray-400">Av. Corrientes 1234, Piso 8<br>CABA, Argentina</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-phone text-primary mt-1 mr-3"></i>
+                            <span class="text-sm text-gray-400">+54 11 4300-0000</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-envelope text-primary mt-1 mr-3"></i>
+                            <span class="text-sm text-gray-400">estudio@pereznotarial.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-clock text-primary mt-1 mr-3"></i>
+                            <span class="text-sm text-gray-400">Lun a Vie: 9:00 - 17:00 hs</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-gray-800">
+                <p class="text-sm text-gray-500 text-center">
+                    © 2024 Pérez & Asoc. Estudio Notarial. All rights reserved. Matrícula CNE N° 1234
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Flotante -->
+    <a href="https://wa.me/541143000000?text=Hola%2C%20quisiera%20consultar%20por%20un%20servicio%20notarial" 
+       class="whatsapp-float" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Contactar por WhatsApp">
+        <i class="fa-brands fa-whatsapp text-3xl"></i>
+    </a>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            } else {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-xmark');
+            }
+        });
+
+        // Close mobile menu when clicking on links
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            });
+        });
+
+        // Active nav link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.offsetHeight;
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Contact form handler with validation
+        const contactForm = document.getElementById('contact-form');
+        const formMessage = document.getElementById('form-message');
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePhone(phone) {
+            const re = /^[\d\s\+\-\(\)]+$/;
+            return re.test(phone) && phone.replace(/\D/g, '').length >= 8;
+        }
+
+        function showError(fieldId, show = true) {
+            const field = document.getElementById(fieldId);
+            const error = document.getElementById(`error-${fieldId}`);
+            if (show) {
+                field.classList.add('input-error');
+                error.classList.remove('hidden');
+            } else {
+                field.classList.remove('input-error');
+                error.classList.add('hidden');
+            }
+        }
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+
+            // Reset errors
+            ['nombre', 'email', 'telefono', 'servicio', 'mensaje'].forEach(field => {
+                showError(field, false);
+            });
+
+            // Validate nombre
+            const nombre = document.getElementById('nombre').value.trim();
+            if (nombre.length < 3) {
+                showError('nombre');
+                isValid = false;
+            }
+
+            // Validate email
+            const email = document.getElementById('email').value.trim();
+            if (!validateEmail(email)) {
+                showError('email');
+                isValid = false;
+            }
+
+            // Validate telefono
+            const telefono = document.getElementById('telefono').value.trim();
+            if (!validatePhone(telefono)) {
+                showError('telefono');
+                isValid = false;
+            }
+
+            // Validate servicio
+            const servicio = document.getElementById('servicio').value;
+            if (!servicio) {
+                showError('servicio');
+                isValid = false;
+            }
+
+            // Validate mensaje
+            const mensaje = document.getElementById('mensaje').value.trim();
+            if (mensaje.length < 10) {
+                showError('mensaje');
+                isValid = false;
+            }
+
+            if (isValid) {
+                formMessage.classList.remove('hidden', 'bg-red-100', 'text-red-700');
+                formMessage.classList.add('bg-green-100', 'text-green-700');
+                formMessage.textContent = '¡Mensaje enviado correctamente! Nos contactaremos a la brevedad.';
+                contactForm.reset();
+                
+                setTimeout(() => {
+                    formMessage.classList.add('hidden');
+                }, 5000);
+            } else {
+                formMessage.classList.remove('hidden', 'bg-green-100', 'text-green-700');
+                formMessage.classList.add('bg-red-100', 'text-red-700');
+                formMessage.textContent = 'Por favor complete todos los campos correctamente.';
+                setTimeout(() => {
+                    formMessage.classList.add('hidden');
+                }, 5000);
+            }
+        });
+
+        // Real-time validation
+        ['nombre', 'email', 'telefono', 'servicio', 'mensaje'].forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            field.addEventListener('blur', () => {
+                if (fieldId === 'email' && field.value && !validateEmail(field.value)) {
+                    showError(fieldId);
+                } else if (fieldId === 'telefono' && field.value && !validatePhone(field.value)) {
+                    showError(fieldId);
+                } else if (field.required && !field.value.trim()) {
+                    showError(fieldId);
+                } else {
+                    showError(fieldId, false);
+                }
+            });
+            
+            field.addEventListener('input', () => {
+                if (field.classList.contains('input-error') && field.value.trim()) {
+                    showError(fieldId, false);
+                }
+            });
+        });
+
+        // Placeholder para botones de descarga
+        document.querySelectorAll('button').forEach(btn => {
+            if (btn.textContent.includes('Descargar Modelo PDF')) {
+                btn.addEventListener('click', () => {
+                    alert('La descarga de modelos PDF estará disponible próximamente. Por favor contáctenos para solicitar el documento.');
+                });
+            }
+        });
+    </script>
+<script>(function(){document.addEventListener("click",function(e){var a=e.target.closest("[data-product-id]");if(!a)return;e.preventDefault();var pid=a.getAttribute("data-product-id");if(pid)parent.postMessage({type:"ecto-artifact-link-click",productId:pid},"*")})})();</script>
+</body>
+</html>

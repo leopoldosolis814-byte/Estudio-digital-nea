@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestión Contable S&S · Panel Ultra Premium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+    /* ====== DARK MODE ====== */
+    --bg-start: #0a0a0f;
+    --bg-end: #14141e;
+    --glass-bg: rgba(255, 255, 255, 0.04);
+    --glass-border: rgba(255, 255, 255, 0.06);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --glass-blur: blur(20px) saturate(1.2);
+    --text: #f0f2f8;
+    --text-light: #94a3b8;
+    --text-muted: #64748b;
+    --accent: #8b5cf6;
+    --accent-glow: #7c3aed;
+    --accent-light: rgba(139, 92, 246, 0.15);
+    --green: #10b981;
+    --green-light: rgba(16, 185, 129, 0.15);
+    --yellow: #f59e0b;
+    --yellow-light: rgba(245, 158, 11, 0.15);
+    --red: #ef4444;
+    --red-light: rgba(239, 68, 68, 0.15);
+    --sidebar-width: 260px;
+    --navbar-height: 70px;
+    --chat-width: 340px;
+    --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    --nav-bg: rgba(10, 10, 15, 0.7);
+    --table-hover: rgba(139, 92, 246, 0.03);
+    --border-subtle: rgba(255, 255, 255, 0.02);
+}
+
+/* ====== LIGHT MODE ====== */
+[data-theme="light"] {
+    --bg-start: #e8edf5;
+    --bg-end: #d5dce6;
+    --glass-bg: rgba(255, 255, 255, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    --glass-blur: blur(20px) saturate(1.4);
+    --text: #0f172a;
+    --text-light: #475569;
+    --text-muted: #64748b;
+    --accent: #7c3aed;
+    --accent-glow: #6d28d9;
+    --accent-light: rgba(124, 58, 237, 0.12);
+    --green: #059669;
+    --green-light: rgba(16, 185, 129, 0.12);
+    --yellow: #d97706;
+    --yellow-light: rgba(245, 158, 11, 0.12);
+    --red: #dc2626;
+    --red-light: rgba(239, 68, 68, 0.12);
+    --nav-bg: rgba(255, 255, 255, 0.7);
+    --table-hover: rgba(124, 58, 237, 0.04);
+    --border-subtle: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .chat-user-status.online { background: #059669; }
+[data-theme="light"] .chat-user-status.offline { background: #94a3b8; }
+[data-theme="light"] .chat-sidebar { background: rgba(255, 255, 255, 0.85); border-color: rgba(0,0,0,0.04); }
+[data-theme="light"] .sidebar { background: rgba(255, 255, 255, 0.7); border-color: rgba(0,0,0,0.04); }
+[data-theme="light"] .result-box { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+[data-theme="light"] .afip-counter { background: var(--red-light); color: #dc2626; }
+[data-theme="light"] .user-menu { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.04); }
+[data-theme="light"] .user-menu:hover { background: rgba(0,0,0,0.04); }
+[data-theme="light"] .notification-icon:hover, [data-theme="light"] .chat-toggle:hover { background: rgba(124,58,237,0.08); }
+[data-theme="light"] .menu-item:hover { background: rgba(124,58,237,0.06); }
+[data-theme="light"] .menu-item.active { background: rgba(124,58,237,0.10); color: #7c3aed; }
+[data-theme="light"] .btn-secondary { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.04); color: var(--text-light); }
+[data-theme="light"] .btn-secondary:hover { background: rgba(0,0,0,0.04); border-color: rgba(124,58,237,0.2); }
+[data-theme="light"] .search-box { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.04); }
+[data-theme="light"] .search-box:focus-within { background: rgba(255,255,255,0.9); border-color: rgba(124,58,237,0.2); }
+[data-theme="light"] .form-input { background: rgba(255,255,255,0.6); border-color: rgba(0,0,0,0.04); color: var(--text); }
+[data-theme="light"] .form-input:focus { background: rgba(255,255,255,0.9); border-color: rgba(124,58,237,0.2); }
+[data-theme="light"] .filter-btn { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.04); }
+[data-theme="light"] .filter-btn.active { background: rgba(124,58,237,0.10); color: #7c3aed; border-color: rgba(124,58,237,0.2); }
+[data-theme="light"] .icon-btn:hover { background: rgba(124,58,237,0.08); color: #7c3aed; }
+[data-theme="light"] .badge-finalizado { background: rgba(100,116,139,0.10); color: #64748b; }
+[data-theme="light"] .calendar-day.today { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+[data-theme="light"] .calendar-day.marked { background: rgba(220,38,38,0.06); }
+[data-theme="light"] .doc-icon.pdf { background: rgba(220,38,38,0.08); color: #dc2626; }
+[data-theme="light"] .doc-icon.word { background: rgba(37,99,235,0.08); color: #2563eb; }
+[data-theme="light"] .doc-icon.excel { background: rgba(5,150,105,0.08); color: #059669; }
+[data-theme="light"] .notification-badge { background: #dc2626; }
+[data-theme="light"] .online-dot { border-color: #e8edf5; }
+[data-theme="light"] .logo { background: linear-gradient(135deg, #7c3aed, #6d28d9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+[data-theme="light"] .progress-bar { background: rgba(0,0,0,0.04); }
+[data-theme="light"] .progress-fill { background: linear-gradient(90deg, #7c3aed, #6d28d9); }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    letter-spacing: -0.01em;
+    transition: background 0.6s ease, color 0.4s ease;
+}
+
+.numbers, .metric-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ====== SCROLLBAR ====== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+/* ====== GLASSMORPHISM ULTRA ====== */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.glass-light {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+/* ====== ANIMACIONES ====== */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.1); }
+    50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.2); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulseGlow 3s ease-in-out infinite; }
+
+/* ====== THEME TOGGLE ====== */
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: var(--text-light);
+    border-radius: 0.75rem;
+    transition: var(--transition);
+    font-size: 1.2rem;
+}
+
+.theme-toggle:hover {
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--accent);
+}
+
+/* ====== NAVBAR ====== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--navbar-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 1000;
+    background: var(--nav-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: var(--transition);
+}
+
+.navbar:hover { border-bottom-color: rgba(139, 92, 246, 0.08); }
+
+.navbar-left { display: flex; align-items: center; gap: 1.2rem; }
+
+.hamburger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: var(--text);
+    border-radius: 0.75rem;
+    transition: var(--transition);
+    display: none;
+}
+.hamburger:hover { background: rgba(139, 92, 246, 0.1); }
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.logo svg { -webkit-text-fill-color: initial; }
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.notification-icon, .chat-toggle {
+    position: relative;
+    cursor: pointer;
+    padding: 0.625rem;
+    color: var(--text-light);
+    border-radius: 0.75rem;
+    transition: var(--transition);
+    background: rgba(255,255,255,0.02);
+}
+
+.notification-icon:hover, .chat-toggle:hover {
+    background: var(--accent-light);
+    color: var(--accent);
+    transform: translateY(-1px);
+}
+
+.notification-badge {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+    background: var(--red);
+    color: white;
+    font-size: 0.5rem;
+    font-weight: 700;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.online-dot {
+    position: absolute;
+    bottom: 0.375rem;
+    right: 0.375rem;
+    width: 10px;
+    height: 10px;
+    background: var(--green);
+    border-radius: 50%;
+    border: 2px solid var(--bg-start);
+    animation: float 3s ease-in-out infinite;
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 0.375rem 0.75rem 0.375rem 0.375rem;
+    border-radius: 9999px;
+    transition: var(--transition);
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-subtle);
+}
+.user-menu:hover { background: rgba(255,255,255,0.04); border-color: rgba(139, 92, 246, 0.15); }
+
+.user-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+.user-name { font-weight: 600; font-size: 0.875rem; color: var(--text-light); }
+
+/* ====== SIDEBAR ====== */
+.sidebar {
+    position: fixed;
+    top: calc(var(--navbar-height) + 1rem);
+    left: 1rem;
+    width: calc(var(--sidebar-width) - 2rem);
+    height: calc(100vh - var(--navbar-height) - 2rem);
+    overflow-y: auto;
+    transition: var(--transition);
+    z-index: 900;
+    border-radius: 24px;
+    padding: 0.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+.sidebar-menu { display: flex; flex-direction: column; gap: 0.125rem; }
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.75rem 1rem;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 14px;
+    position: relative;
+}
+.menu-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 0;
+    background: var(--accent);
+    border-radius: 0 3px 3px 0;
+    transition: var(--transition);
+}
+.menu-item:hover { background: var(--accent-light); color: var(--text); }
+.menu-item.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+.menu-item.active::before { height: 60%; }
+.menu-item svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; }
+
+/* ====== CHAT SIDEBAR ====== */
+.chat-sidebar {
+    position: fixed;
+    top: calc(var(--navbar-height) + 1rem);
+    right: -100%;
+    width: var(--chat-width);
+    height: calc(100vh - var(--navbar-height) - 2rem);
+    transition: var(--transition);
+    z-index: 950;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+.chat-sidebar.open { right: 1rem; }
+
+.chat-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+.chat-header h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: 0.5rem; }
+.chat-status { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: var(--text-light); }
+
+.chat-users { flex: 1; overflow-y: auto; padding: 1rem 1.5rem; }
+.chat-user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-bottom: 0.5rem;
+}
+.chat-user:hover { background: var(--accent-light); }
+
+.chat-user-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #6d28d9);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    position: relative;
+}
+.chat-user-status {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--bg-start);
+}
+.chat-user-info h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.125rem; }
+.chat-user-info p { font-size: 0.75rem; color: var(--text-light); }
+
+/* ====== MAIN CONTENT ====== */
+.main-content {
+    margin-top: calc(var(--navbar-height) + 1rem);
+    margin-left: var(--sidebar-width);
+    margin-right: 1rem;
+    padding: 1.5rem;
+    transition: var(--transition);
+    min-height: calc(100vh - var(--navbar-height) - 2rem);
+}
+.main-content.chat-open { margin-right: calc(var(--chat-width) + 2rem); }
+
+.section { display: none; }
+.section.active { display: block; animation: fadeInUp 0.6s ease-out; }
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.section-title h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 0.375rem;
+    letter-spacing: -0.03em;
+    transition: color 0.4s ease;
+}
+.section-title p { color: var(--text-light); font-size: 0.9375rem; }
+
+/* ====== BUTTONS ====== */
+.btn {
+    padding: 0.75rem 1.75rem;
+    border: none;
+    border-radius: 14px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+}
+.btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+    opacity: 0;
+    transition: var(--transition);
+}
+.btn:hover::after { opacity: 1; }
+
+.btn-primary {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: white;
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.25);
+}
+.btn-primary:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 40px rgba(139, 92, 246, 0.35);
+}
+
+.btn-secondary {
+    background: rgba(255,255,255,0.03);
+    color: var(--text-light);
+    border: 1px solid var(--border-subtle);
+}
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.06);
+    transform: translateY(-2px);
+    border-color: rgba(139, 92, 246, 0.2);
+}
+.btn-sm { padding: 0.5rem 1.25rem; font-size: 0.8125rem; }
+
+/* ====== BENTO GRID ====== */
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.bento-item {
+    padding: 1.75rem;
+    border-radius: 24px;
+    transition: var(--transition);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+.bento-item:nth-child(1) { animation-delay: 0.05s; }
+.bento-item:nth-child(2) { animation-delay: 0.1s; }
+.bento-item:nth-child(3) { animation-delay: 0.15s; }
+.bento-item:nth-child(4) { animation-delay: 0.2s; }
+
+.bento-item:hover {
+    transform: translateY(-4px) scale(1.005);
+    border-color: rgba(139, 92, 246, 0.2);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+}
+[data-theme="light"] .bento-item:hover {
+    border-color: rgba(124, 58, 237, 0.25);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.06);
+}
+
+.bento-large { grid-column: span 2; }
+.bento-tall { grid-row: span 2; }
+
+.metric-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+.metric-content h3 {
+    color: var(--text-light);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+.metric-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 0.625rem;
+    letter-spacing: -0.02em;
+    transition: color 0.4s ease;
+}
+.metric-change {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 8px;
+}
+.metric-change.positive { color: var(--green); background: var(--green-light); }
+.metric-change.negative { color: var(--red); background: var(--red-light); }
+
+.metric-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-light);
+    color: var(--accent);
+    flex-shrink: 0;
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* ====== TABLES ====== */
+.table-wrapper {
+    border-radius: 24px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+.table-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.table-header h2 { font-size: 1.125rem; font-weight: 700; color: var(--text); transition: color 0.4s ease; }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+table { width: 100%; border-collapse: collapse; min-width: 600px; }
+thead { background: var(--accent-light); transition: background 0.4s ease; }
+th {
+    text-align: left;
+    padding: 0.875rem 1.25rem;
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+}
+td { padding: 0.875rem 1.25rem; border-top: 1px solid var(--border-subtle); font-size: 0.875rem; color: var(--text); transition: color 0.4s ease; }
+tbody tr { transition: var(--transition); }
+tbody tr:hover { background: var(--table-hover); }
+
+/* ====== BADGES ====== */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+.badge-active { background: var(--green-light); color: var(--green); }
+.badge-tramite { background: var(--yellow-light); color: var(--yellow); }
+.badge-finalizado { background: rgba(100,116,139,0.12); color: var(--text-muted); }
+.badge-alta { background: var(--red-light); color: var(--red); }
+.badge-media { background: var(--yellow-light); color: var(--yellow); }
+.badge-pagada { background: var(--green-light); color: var(--green); }
+.badge-pendiente { background: var(--yellow-light); color: var(--yellow); }
+.badge-vencida { background: var(--red-light); color: var(--red); }
+
+/* ====== FILTERS ====== */
+.filters { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.filter-btn {
+    padding: 0.5rem 1.125rem;
+    border: 1px solid var(--border-subtle);
+    background: rgba(255,255,255,0.02);
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: var(--transition);
+}
+.filter-btn:hover { background: rgba(255,255,255,0.04); color: var(--text); }
+.filter-btn.active { background: var(--accent-light); color: var(--accent); border-color: rgba(139, 92, 246, 0.2); }
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    min-width: 240px;
+    transition: var(--transition);
+}
+.search-box:focus-within { border-color: rgba(139, 92, 246, 0.2); background: rgba(255,255,255,0.04); }
+.search-box input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 0.875rem;
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    min-width: 0;
+}
+.search-box input::placeholder { color: var(--text-light); }
+
+/* ====== VENCIMIENTOS ====== */
+.vencimiento-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: var(--transition);
+    border-radius: 14px;
+    margin-bottom: 0.25rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.vencimiento-item:last-child { border-bottom: none; margin-bottom: 0; }
+.vencimiento-item:hover { background: var(--table-hover); }
+.vencimiento-info h4 { font-size: 0.875rem; font-weight: 700; margin-bottom: 0.125rem; }
+.vencimiento-info p { font-size: 0.75rem; color: var(--text-light); }
+.vencimiento-date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+.vencimiento-date.verde { color: var(--green); background: var(--green-light); }
+.vencimiento-date.amarillo { color: var(--yellow); background: var(--yellow-light); }
+.vencimiento-date.rojo { color: var(--red); background: var(--red-light); }
+
+/* ====== CHARTS ====== */
+.chart-container {
+    border-radius: 24px;
+    padding: 1.75rem;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition: background 0.4s ease, border-color 0.4s ease;
+}
+.chart-container h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--text); transition: color 0.4s ease; }
+
+/* ====== FORMS ====== */
+.form-group { margin-bottom: 1.25rem; }
+.form-label { display: block; font-weight: 600; font-size: 0.875rem; margin-bottom: 0.5rem; color: var(--text); transition: color 0.4s ease; }
+.form-input {
+    width: 100%;
+    padding: 0.625rem 1rem;
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    font-size: 0.875rem;
+    transition: var(--transition);
+    background: rgba(255,255,255,0.02);
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+}
+.form-input:focus { outline: none; border-color: rgba(139, 92, 246, 0.2); background: rgba(255,255,255,0.04); }
+.form-input::placeholder { color: var(--text-light); }
+
+.checkbox-group { display: flex; align-items: center; gap: 0.625rem; margin-bottom: 0.75rem; }
+.checkbox-group input[type="checkbox"] { width: 1.25rem; height: 1.25rem; cursor: pointer; accent-color: var(--accent); }
+.checkbox-group label { font-size: 0.875rem; cursor: pointer; font-weight: 500; color: var(--text); transition: color 0.4s ease; }
+
+/* ====== ACTION ICONS ====== */
+.action-icons { display: flex; gap: 0.25rem; }
+.icon-btn {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: var(--text-light);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+.icon-btn:hover { background: var(--accent-light); color: var(--accent); }
+
+/* ====== PROGRESS ====== */
+.progress-bar { width: 100%; height: 4px; background: var(--border-subtle); border-radius: 999px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #6d28d9); border-radius: 999px; transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* ====== AFIP ====== */
+.afip-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.875rem;
+    background: var(--red-light);
+    color: var(--red);
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.8125rem;
+}
+
+/* ====== DOCUMENTS ====== */
+.doc-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: var(--transition);
+    border-radius: 14px;
+}
+.doc-item:last-child { border-bottom: none; }
+.doc-item:hover { background: var(--table-hover); }
+.doc-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.doc-icon.pdf { background: var(--red-light); color: var(--red); }
+.doc-icon.word { background: rgba(59,130,246,0.12); color: #3b82f6; }
+.doc-icon.excel { background: var(--green-light); color: var(--green); }
+.doc-info { flex: 1; min-width: 0; }
+.doc-info h4 { font-size: 0.875rem; font-weight: 700; margin-bottom: 0.125rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.doc-meta { font-size: 0.75rem; color: var(--text-light); }
+
+/* ====== CALENDAR ====== */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.25rem;
+}
+.calendar-day-header {
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-light);
+    padding: 0.25rem 0;
+}
+.calendar-day {
+    text-align: center;
+    padding: 0.5rem 0;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    transition: var(--transition);
+    cursor: default;
+    color: var(--text);
+}
+.calendar-day:hover { background: var(--accent-light); }
+.calendar-day.inactive { color: var(--text-muted); }
+.calendar-day.today { background: linear-gradient(135deg, var(--accent), #6d28d9); color: white; font-weight: 700; }
+.calendar-day.marked { background: var(--red-light); font-weight: 600; }
+
+/* ====== CARDS GRID ====== */
+.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+/* ====== CALCULATOR ====== */
+.calculator-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.result-box {
+    background: linear-gradient(135deg, var(--accent), #6d28d9);
+    color: white;
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(139, 92, 246, 0.25);
+}
+.result-box h3 { font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; margin-bottom: 0.75rem; }
+.result-value { font-size: 2.5rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+
+/* ====== PAGINATION ====== */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+.pagination-info { font-size: 0.875rem; color: var(--text-light); }
+.pagination-buttons { display: flex; gap: 0.5rem; }
+
+/* ====== OVERLAY ====== */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    z-index: 850;
+}
+.overlay.active { display: block; }
+
+/* ====== TOOLTIP ====== */
+[data-tooltip] { position: relative; }
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background: rgba(15,23,42,0.9);
+    color: white;
+    padding: 0.375rem 0.75rem;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition);
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+}
+[data-tooltip]:hover::after { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 1200px) {
+    .bento-grid { grid-template-columns: repeat(2, 1fr); }
+    .bento-large { grid-column: span 1; }
+    .bento-tall { grid-row: span 1; }
+}
+@media (max-width: 1024px) {
+    .main-content.chat-open { margin-right: 1rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .calculator-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+    :root { --sidebar-width: 280px; --navbar-height: 60px; }
+    .hamburger { display: block; }
+    .user-name { display: none; }
+    .sidebar {
+        left: -100%;
+        width: calc(100% - 2rem);
+        max-width: 320px;
+        top: calc(var(--navbar-height) + 0.75rem);
+        height: calc(100vh - var(--navbar-height) - 1.5rem);
+        padding: 0.25rem;
+        border-radius: 20px;
+    }
+    .sidebar.open { left: 1rem; }
+    .main-content {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        padding: 1rem;
+        margin-top: calc(var(--navbar-height) + 0.75rem);
+    }
+    .section-header { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+    .section-title h1 { font-size: 1.5rem; }
+    .bento-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .btn { width: 100%; justify-content: center; }
+    .search-box { min-width: 100%; }
+    .table-header { flex-direction: column; align-items: stretch; padding: 1rem; }
+    .filters { width: 100%; flex-wrap: wrap; }
+    .filter-btn { flex: 1; text-align: center; min-width: calc(50% - 0.5rem); font-size: 0.75rem; padding: 0.375rem 0.75rem; }
+    th, td { padding: 0.625rem 0.75rem; font-size: 0.75rem; }
+    .chat-sidebar {
+        width: calc(100% - 2rem);
+        max-width: 320px;
+        right: -100%;
+        top: calc(var(--navbar-height) + 0.75rem);
+        height: calc(100vh - var(--navbar-height) - 1.5rem);
+        border-radius: 20px;
+    }
+    .chat-sidebar.open { right: 1rem; }
+    .vencimiento-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 0.75rem; }
+    .vencimiento-date { align-self: flex-start; }
+    .metric-value { font-size: 2rem; }
+    .metric-icon { width: 3rem; height: 3rem; }
+    .bento-item { padding: 1.25rem; }
+    .pagination { flex-direction: column; align-items: stretch; text-align: center; padding: 1rem; }
+    .pagination-buttons { justify-content: center; }
+    .doc-item { flex-wrap: wrap; gap: 0.5rem; }
+    .doc-icon { width: 2.5rem; height: 2.5rem; }
+    .result-box { padding: 1.5rem; }
+    .result-value { font-size: 2rem; }
+    .navbar { padding: 0 1rem; height: var(--navbar-height); }
+    .logo { font-size: 1.125rem; }
+}
+@media (max-width: 480px) {
+    .main-content { padding: 0.75rem; margin-left: 0.75rem; margin-right: 0.75rem; }
+    .section-title h1 { font-size: 1.25rem; }
+    .bento-item { padding: 1rem; border-radius: 18px; }
+    th, td { padding: 0.5rem 0.625rem; font-size: 0.6875rem; }
+    .filter-btn { font-size: 0.6875rem; padding: 0.25rem 0.625rem; }
+    .metric-value { font-size: 1.625rem; }
+    .result-value { font-size: 1.625rem; }
+    .calendar-day { padding: 0.375rem 0; font-size: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ====== NAVBAR ====== -->
+<nav class="navbar">
+    <div class="navbar-left">
+        <button class="hamburger" id="hamburgerBtn">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        <div class="logo animate-float">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5"></path>
+                <path d="M2 12l10 5 10-5"></path>
+            </svg>
+            S&S Contable
+        </div>
+    </div>
+    <div class="navbar-right">
+        <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+            <span id="themeIcon">🌙</span>
+        </button>
+        <div class="chat-toggle" id="chatToggle" data-tooltip="Chat interno">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span class="online-dot"></span>
+        </div>
+        <div class="notification-icon" data-tooltip="Notificaciones">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span class="notification-badge animate-pulse-glow">3</span>
+        </div>
+        <div class="user-menu">
+            <div class="user-avatar">CS</div>
+            <span class="user-name">CPN Silva</span>
+        </div>
+    </div>
+</nav>
+
+<!-- ====== SIDEBAR ====== -->
+<aside class="sidebar" id="sidebar">
+    <nav class="sidebar-menu">
+        <a class="menu-item active" data-section="dashboard">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Dashboard
+        </a>
+        <a class="menu-item" data-section="clientes">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path></svg>
+            Clientes
+        </a>
+        <a class="menu-item" data-section="expedientes">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+            Expedientes
+        </a>
+        <a class="menu-item" data-section="facturacion">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+            Facturación
+        </a>
+        <a class="menu-item" data-section="auditoria">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            Auditoría
+        </a>
+        <a class="menu-item" data-section="afip">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
+            AFIP
+        </a>
+        <a class="menu-item" data-section="honorarios">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            Honorarios
+        </a>
+        <a class="menu-item" data-section="vencimientos">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            Vencimientos
+        </a>
+        <a class="menu-item" data-section="documentos">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+            Documentos
+        </a>
+        <a class="menu-item" data-section="tareas">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            Tareas
+        </a>
+        <a class="menu-item" data-section="calendario">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Calendario
+        </a>
+        <a class="menu-item" data-section="informes">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>
+            Informes
+        </a>
+        <a class="menu-item" data-section="configuracion">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 0 0 1-2.83 0l-.06-.06a1.65 0 0 0-1.82-.33 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 0 0 1-2-2v-.09A1.65 0 0 0 9 19.4a1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 0 0 0 1 1.51 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 0 0 0-1.51 1z"></path></svg>
+            Configuración
+        </a>
+    </nav>
+</aside>
+
+<!-- ====== CHAT SIDEBAR ====== -->
+<aside class="chat-sidebar" id="chatSidebar">
+    <div class="chat-header">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>Chat Interno</h3>
+            <button class="icon-btn" id="closeChatBtn">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="chat-status"><div style="width:8px;height:8px;background:var(--green);border-radius:50%;"></div>3 usuarios online</div>
+    </div>
+    <div class="chat-users">
+        <div class="chat-user"><div class="chat-user-avatar">CG<span class="chat-user-status online"></span></div><div class="chat-user-info"><h4>CPN Gómez</h4><p>Activo ahora</p></div></div>
+        <div class="chat-user"><div class="chat-user-avatar">CM<span class="chat-user-status online"></span></div><div class="chat-user-info"><h4>CPN Martínez</h4><p>En línea</p></div></div>
+        <div class="chat-user"><div class="chat-user-avatar">AR<span class="chat-user-status online"></span></div><div class="chat-user-info"><h4>Ana Rodríguez</h4><p>Disponible</p></div></div>
+        <div class="chat-user"><div class="chat-user-avatar">JL<span class="chat-user-status offline"></span></div><div class="chat-user-info"><h4>Juan López</h4><p>Hace 2 horas</p></div></div>
+    </div>
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- ====== MAIN CONTENT ====== -->
+<main class="main-content" id="mainContent">
+
+<!-- ====== DASHBOARD ====== -->
+<section class="section active" id="dashboard">
+    <div class="section-header">
+        <div class="section-title"><h1>Panel de Control</h1><p>Bienvenido de vuelta, CPN Silva</p></div>
+        <button class="btn btn-primary animate-pulse-glow">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Nuevo Expediente
+        </button>
+    </div>
+
+    <div class="bento-grid">
+        <div class="bento-item metric-card">
+            <div class="metric-content">
+                <h3>Total Clientes</h3>
+                <div class="metric-value numbers" data-target="248">0</div>
+                <span class="metric-change positive">+12%</span>
+            </div>
+            <div class="metric-icon"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div>
+        </div>
+        <div class="bento-item metric-card">
+            <div class="metric-content">
+                <h3>Expedientes Activos</h3>
+                <div class="metric-value numbers" data-target="156">0</div>
+                <span class="metric-change positive">+8%</span>
+            </div>
+            <div class="metric-icon"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg></div>
+        </div>
+        <div class="bento-item metric-card">
+            <div class="metric-content">
+                <h3>Vencimientos</h3>
+                <div class="metric-value numbers" data-target="24">0</div>
+                <span class="metric-change negative">-3%</span>
+            </div>
+            <div class="metric-icon"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
+        </div>
+        <div class="bento-item metric-card">
+            <div class="metric-content">
+                <h3>Recaudación Mes</h3>
+                <div class="metric-value numbers" data-target="847200" data-prefix="$">$0</div>
+                <span class="metric-change positive">+15%</span>
+            </div>
+            <div class="metric-icon"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+        </div>
+
+        <div class="bento-item bento-large">
+            <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:1.25rem;color:var(--text);transition:color 0.4s ease;">Ingresos por Mes</h3>
+            <canvas id="chartIngresos" style="max-height:260px;"></canvas>
+        </div>
+
+        <div class="bento-item bento-tall">
+            <div class="table-header" style="padding:0;margin-bottom:1rem;border:none;"><h3 style="font-size:1rem;color:var(--text);transition:color 0.4s ease;">Vencimientos Próximos</h3></div>
+            <div class="vencimiento-item"><div class="vencimiento-info"><h4>Comercial del Norte</h4><p>DDJJ IVA</p></div><div class="vencimiento-date rojo">4 días</div></div>
+            <div class="vencimiento-item"><div class="vencimiento-info"><h4>Alimentos del Valle</h4><p>Balance</p></div><div class="vencimiento-date rojo">2 días</div></div>
+            <div class="vencimiento-item"><div class="vencimiento-info"><h4>Farmacia Central</h4><p>Presentación</p></div><div class="vencimiento-date amarillo">10 días</div></div>
+            <div class="vencimiento-item"><div class="vencimiento-info"><h4>Agro Sur SRL</h4><p>Liquidación</p></div><div class="vencimiento-date verde">16 días</div></div>
+            <button class="btn btn-secondary" style="width:100%;margin-top:1rem;">Ver todos los vencimientos</button>
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <div class="table-header"><h2>Últimos Expedientes</h2><span style="font-size:0.875rem;color:var(--text-light);">Actualizado hace 5 min</span></div>
+        <div class="table-scroll">
+            <table>
+                <thead><tr><th>Cliente</th><th>Expediente N°</th><th>Estado</th><th>Fecha vencimiento</th><th>Responsable</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Estudio López SA</strong></td><td>Exp 2024-0156</td><td><span class="badge badge-active">Activo</span></td><td>15/08/2026</td><td>CPN Gómez</td></tr>
+                    <tr><td><strong>Comercial del Norte</strong></td><td>Exp 2024-0142</td><td><span class="badge badge-tramite">En trámite</span></td><td>22/07/2026</td><td>CPN Silva</td></tr>
+                    <tr><td><strong>Agro Sur SRL</strong></td><td>Exp 2024-0189</td><td><span class="badge badge-active">Activo</span></td><td>03/08/2026</td><td>CPN Silva</td></tr>
+                    <tr><td><strong>Constructora Delta SA</strong></td><td>Exp 2024-0123</td><td><span class="badge badge-finalizado">Finalizado</span></td><td>10/07/2026</td><td>CPN Gómez</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ====== CLIENTES ====== -->
+<section class="section" id="clientes">
+    <div class="section-header">
+        <div class="section-title"><h1>Clientes</h1><p>Gestión de cartera de clientes</p></div>
+        <button class="btn btn-primary"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Agregar Cliente</button>
+    </div>
+    <div class="table-wrapper">
+        <div class="table-header">
+            <div class="search-box"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg><input type="text" placeholder="Buscar cliente..." id="searchClientes"></div>
+        </div>
+        <div class="table-scroll">
+            <table id="tablaClientes">
+                <thead><tr><th>Cliente</th><th>CUIT</th><th>Teléfono</th><th>Email</th><th>Exp. activos</th><th>Último movimiento</th><th>Acciones</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Agro Sur SRL</strong></td><td>30-71234567-8</td><td>011-4567-8901</td><td>contacto@agrosur.com</td><td>3</td><td>15/06/2026</td><td><div class="action-icons"><button class="icon-btn"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button><button class="icon-btn"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button></div></td></tr>
+                    <tr><td><strong>Constructora Delta SA</strong></td><td>30-70987654-3</td><td>011-4321-8765</td><td>info@deltasa.com.ar</td><td>5</td><td>12/06/2026</td><td><div class="action-icons"><button class="icon-btn"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button><button class="icon-btn"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination"><div class="pagination-info">Mostrando 1-2 de 248 clientes</div><div class="pagination-buttons"><button class="btn btn-secondary btn-sm">Anterior</button><button class="btn btn-secondary btn-sm">Siguiente</button></div></div>
+    </div>
+</section>
+
+<!-- ====== EXPEDIENTES ====== -->
+<section class="section" id="expedientes">
+    <div class="section-header"><div class="section-title"><h1>Expedientes</h1><p>Administración de expedientes contables</p></div></div>
+    <div class="table-wrapper">
+        <div class="table-header">
+            <div class="filters">
+                <button class="filter-btn active" data-filter="todos">Todos</button>
+                <button class="filter-btn" data-filter="activo">Activos</button>
+                <button class="filter-btn" data-filter="tramite">En trámite</button>
+                <button class="filter-btn" data-filter="finalizado">Finalizados</button>
+            </div>
+            <div class="search-box"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg><input type="text" placeholder="Buscar expediente..." id="searchExpedientes"></div>
+        </div>
+        <div class="table-scroll">
+            <table id="tablaExpedientes">
+                <thead><tr><th>N° expediente</th><th>Cliente</th><th>Tipo</th><th>Fecha inicio</th><th>Estado</th><th>Vencimiento</th><th>Responsable</th></tr></thead>
+                <tbody>
+                    <tr data-estado="activo"><td><strong>2024-0156</strong></td><td>Estudio López SA</td><td>Tributario</td><td>15/01/2026</td><td><span class="badge badge-active">Activo</span></td><td>15/08/2026</td><td>CPN Gómez</td></tr>
+                    <tr data-estado="tramite"><td><strong>2024-0142</strong></td><td>Comercial del Norte</td><td>Societario</td><td>20/02/2026</td><td><span class="badge badge-tramite">En trámite</span></td><td>22/07/2026</td><td>CPN Silva</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ====== FACTURACIÓN ====== -->
+<section class="section" id="facturacion">
+    <div class="section-header"><div class="section-title"><h1>Facturación y Cobranzas</h1><p>Gestión de facturas y seguimiento de pagos</p></div><button class="btn btn-primary"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Nueva Factura</button></div>
+    <div class="bento-grid" style="margin-bottom:2rem;">
+        <div class="bento-item metric-card"><div class="metric-content"><h3>Recaudado Mes</h3><div class="metric-value numbers" data-target="847200" data-prefix="$">$0</div><span class="metric-change positive">+15%</span></div></div>
+        <div class="bento-item metric-card"><div class="metric-content"><h3>Pendiente Cobro</h3><div class="metric-value numbers" data-target="234500" data-prefix="$">$0</div><span class="metric-change negative">18 facturas</span></div></div>
+    </div>
+    <div class="table-wrapper">
+        <div class="table-header">
+            <div class="filters"><button class="filter-btn active" data-fact-filter="todas">Todas</button><button class="filter-btn" data-fact-filter="pagada">Pagadas</button><button class="filter-btn" data-fact-filter="pendiente">Pendientes</button></div>
+            <div class="search-box"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg><input type="text" placeholder="Buscar factura..." id="searchFacturas"></div>
+        </div>
+        <div class="table-scroll">
+            <table id="tablaFacturas">
+                <thead><tr><th>Cliente</th><th>Factura N°</th><th>Concepto</th><th>Monto</th><th>Fecha emisión</th><th>Vencimiento</th><th>Estado</th><th>Acciones</th></tr></thead>
+                <tbody>
+                    <tr data-fact-estado="pagada"><td><strong>Agro Sur SRL</strong></td><td>FC-0001-2026</td><td>Balance Anual</td><td class="numbers">$85,000</td><td>01/06/2026</td><td>15/06/2026</td><td><span class="badge badge-pagada">Pagada</span></td><td><button class="icon-btn"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></button></td></tr>
+                    <tr data-fact-estado="pendiente"><td><strong>Constructora Delta SA</strong></td><td>FC-0002-2026</td><td>Liquidación Sueldos</td><td class="numbers">$125,000</td><td>05/06/2026</td><td>20/06/2026</td><td><span class="badge badge-pendiente">Pendiente</span></td><td><button class="icon-btn"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9h18s-3-2-3-9"></path></svg></button></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ====== AUDITORÍA ====== -->
+<section class="section" id="auditoria">
+    <div class="section-header"><div class="section-title"><h1>Auditoría y Balances</h1><p>Seguimiento de balances y cierres contables</p></div><button class="btn btn-primary"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Generar Balance PDF</button></div>
+    <div class="table-wrapper">
+        <div class="table-header"><h2>Balances en Proceso</h2></div>
+        <div class="table-scroll">
+            <table>
+                <thead><tr><th>Cliente</th><th>Tipo Balance</th><th>Fecha Cierre</th><th>Responsable</th><th>Avance</th><th>Estado</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Agro Sur SRL</strong></td><td>Balance Anual 2025</td><td>31/12/2025</td><td>CPN Silva</td><td><div style="display:flex;align-items:center;gap:0.75rem;"><div class="progress-bar" style="flex:1;"><div class="progress-fill" style="width:75%;"></div></div><span style="font-weight:600;font-size:0.8125rem;">75%</span></div></td><td><span class="badge badge-tramite">En proceso</span></td></tr>
+                    <tr><td><strong>Constructora Delta SA</strong></td><td>Balance Trimestral Q2</td><td>30/06/2026</td><td>CPN Gómez</td><td><div style="display:flex;align-items:center;gap:0.75rem;"><div class="progress-bar" style="flex:1;"><div class="progress-fill" style="width:40%;"></div></div><span style="font-weight:600;font-size:0.8125rem;">40%</span></div></td><td><span class="badge badge-tramite">En proceso</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ====== AFIP ====== -->
+<section class="section" id="afip">
+    <div class="section-header"><div class="section-title"><h1>AFIP y Organismos</h1><p>Vencimientos fiscales y gestión de presentaciones</p></div></div>
+    <div class="bento-grid">
+        <div class="bento-item">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+                <div><h3 style="font-size:1.125rem;font-weight:700;margin-bottom:0.25rem;color:var(--text);transition:color 0.4s ease;">IVA</h3><p style="font-size:0.875rem;color:var(--text-light);">Declaración Mensual</p></div>
+                <div class="afip-counter">4 días</div>
+            </div>
+            <p style="font-size:0.875rem;margin-bottom:1rem;color:var(--text);transition:color 0.4s ease;"><strong>Vence:</strong> 22/07/2026</p>
+            <a href="#" class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;">Ir a AFIP</a>
+        </div>
+        <div class="bento-item">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+                <div><h3 style="font-size:1.125rem;font-weight:700;margin-bottom:0.25rem;color:var(--text);transition:color 0.4s ease;">Ganancias</h3><p style="font-size:0.875rem;color:var(--text-light);">Anticipo</p></div>
+                <div style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.375rem 0.875rem;background:var(--yellow-light);color:var(--yellow);border-radius:10px;font-weight:700;font-size:0.8125rem;">12 días</div>
+            </div>
+            <p style="font-size:0.875rem;margin-bottom:1rem;color:var(--text);transition:color 0.4s ease;"><strong>Vence:</strong> 30/07/2026</p>
+            <a href="#" class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;">Ir a AFIP</a>
+        </div>
+        <div class="bento-item">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+                <div><h3 style="font-size:1.125rem;font-weight:700;margin-bottom:0.25rem;color:var(--text);transition:color 0.4s ease;">Autónomos</h3><p style="font-size:0.875rem;color:var(--text-light);">Pago Mensual</p></div>
+                <div style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.375rem 0.875rem;background:var(--green-light);color:var(--green);border-radius:10px;font-weight:700;font-size:0.8125rem;">18 días</div>
+            </div>
+            <p style="font-size:0.875rem;margin-bottom:1rem;color:var(--text);transition:color 0.4s ease;"><strong>Vence:</strong> 05/08/2026</p>
+            <a href="#" class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;">Ir a AFIP</a>
+        </div>
+        <div class="bento-item">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+                <div><h3 style="font-size:1.125rem;font-weight:700;margin-bottom:0.25rem;color:var(--text);transition:color 0.4s ease;">IIBB</h3><p style="font-size:0.875rem;color:var(--text-light);">Ingresos Brutos</p></div>
+                <div style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.375rem 0.875rem;background:var(--yellow-light);color:var(--yellow);border-radius:10px;font-weight:700;font-size:0.8125rem;">8 días</div>
+            </div>
+            <p style="font-size:0.875rem;margin-bottom:1rem;color:var(--text);transition:color 0.4s ease;"><strong>Vence:</strong> 26/07/2026</p>
+            <a href="#" class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;">Ir a ARBA</a>
+        </div>
+    </div>
+</section>
+
+<!-- ====== HONORARIOS ====== -->
+<section class="section" id="honorarios">
+    <div class="section-header"><div class="section-title"><h1>Gestión de Honorarios</h1><p>Calculadora y historial de facturación</p></div></div>
+    <div class="glass-light" style="margin-bottom:1.5rem;padding:1.75rem;border-radius:24px;">
+        <h3 style="margin-bottom:1.5rem;color:var(--text);transition:color 0.4s ease;">Calculadora de Honorarios</h3>
+        <div class="calculator-grid">
+            <div>
+                <div class="form-group"><label class="form-label">Tipo de Servicio</label><select class="form-input" id="tipoServicio"><option value="30000">Balance Anual - Base $30,000</option><option value="15000">DDJJ Mensual - Base $15,000</option></select></div>
+                <div class="form-group"><label class="form-label">Complejidad</label><select class="form-input" id="complejidad"><option value="1">Básica (x1.0)</option><option value="1.3">Media (x1.3)</option><option value="1.6">Alta (x1.6)</option></select></div>
+                <div class="form-group"><label class="form-label">Cantidad de horas estimadas</label><input type="number" class="form-input" id="horas" value="10" min="1"></div>
+                <button class="btn btn-primary" style="width:100%;" onclick="calcularHonorarios()">Calcular Honorarios</button>
+            </div>
+            <div class="result-box"><h3>Total Estimado</h3><div class="result-value" id="resultadoHonorarios">$30,000</div><p style="font-size:0.875rem;opacity:0.8;margin-top:1rem;">Precio final sugerido</p></div>
+        </div>
+    </div>
+    <div class="table-wrapper">
+        <div class="table-header"><h2>Historial de Facturación por Cliente</h2></div>
+        <div class="table-scroll">
+            <table>
+                <thead><tr><th>Cliente</th><th>Servicios Facturados</th><th>Total 2026</th><th>Última Factura</th><th>Promedio Mensual</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Agro Sur SRL</strong></td><td>12 servicios</td><td class="numbers">$850,000</td><td>01/06/2026</td><td class="numbers">$121,428</td></tr>
+                    <tr><td><strong>Constructora Delta SA</strong></td><td>18 servicios</td><td class="numbers">$1,250,000</td><td>05/06/2026</td><td class="numbers">$178,571</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ====== VENCIMIENTOS ====== -->
+<section class="section" id="vencimientos">
+    <div class="section-header"><div class="section-title"><h1>Vencimientos</h1><p>Control de fechas límite y alertas</p></div></div>
+    <div class="cards-grid">
+        <div class="glass-light" style="padding:1.75rem;border-radius:24px;">
+            <h3 style="margin-bottom:1rem;color:var(--text);transition:color 0.4s ease;">Calendario - Julio 2026</h3>
+            <div class="calendar-grid">
+                <div class="calendar-day-header">L</div><div class="calendar-day-header">M</div><div class="calendar-day-header">M</div><div class="calendar-day-header">J</div><div class="calendar-day-header">V</div><div class="calendar-day-header">S</div><div class="calendar-day-header">D</div>
+                <div class="calendar-day inactive">29</div><div class="calendar-day inactive">30</div><div class="calendar-day">1</div><div class="calendar-day">2</div><div class="calendar-day">3</div><div class="calendar-day">4</div><div class="calendar-day">5</div>
+                <div class="calendar-day">6</div><div class="calendar-day">7</div><div class="calendar-day">8</div><div class="calendar-day">9</div><div class="calendar-day marked">10</div><div class="calendar-day">11</div><div class="calendar-day">12</div>
+                <div class="calendar-day">13</div><div class="calendar-day">14</div><div class="calendar-day">15</div><div class="calendar-day">16</div><div class="calendar-day">17</div><div class="calendar-day today">18</div><div class="calendar-day">19</div>
+                <div class="calendar-day marked">20</div><div class="calendar-day">21</div><div class="calendar-day marked">22</div><div class="calendar-day">23</div><div class="calendar-day">24</div><div class="calendar-day">25</div><div class="calendar-day">26</div>
+                <div class="calendar-day">27</div><div class="calendar-day marked">28</div><div class="calendar-day">29</div><div class="calendar-day">30</div><div class="calendar-day">31</div>
+            </div>
+        </div>
+        <div class="glass-light" style="padding:1.75rem;border-radius:24px;">
+            <h3 style="margin-bottom:1rem;color:var(--text);transition:color 0.4s ease;">Vencimientos próximos</h3>
+            <div class="vencimiento-item"><div class="vencimiento-info"><h4>Comercial del Norte</h4><p>Exp 2024-0142 - DDJJ IVA</p></div><div class="vencimiento-date rojo">4 días</div></div>
+            <div class="vencimiento-item"><div class="vencimiento-info"><h4>Alimentos del Valle SRL</h4><p>Exp 2024-0205 - Balance</p></div><div class="vencimiento-date rojo">2 días</div></div>
+            <div class="vencimiento-item"><div class="vencimiento-info"><h4>Farmacia Central</h4><p>Exp 2024-0198 - Presentación</p></div><div class="vencimiento-date amarillo">10 días</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== DOCUMENTOS ====== -->
+<section class="section" id="documentos">
+    <div class="section-header"><div class="section-title"><h1>Documentos</h1><p>Gestión de archivos y documentación</p></div><button class="btn btn-primary"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>Subir Documento</button></div>
+    <div class="table-wrapper">
+        <div class="table-header"><div class="search-box"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg><input type="text" placeholder="Buscar documento..."></div></div>
+        <div class="doc-item"><div class="doc-icon pdf"><svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/></svg></div><div class="doc-info"><h4>Balance_Anual_2025.pdf</h4><div class="doc-meta">Agro Sur SRL • Exp 2024-0189 • 15/06/2026 • 2.4 MB</div></div><div class="action-icons"><button class="icon-btn"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></button></div></div>
+        <div class="doc-item"><div class="doc-icon excel"><svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v8a2 2 0 01-2 2h-2a2 2 0 01-2-2V6z"/></svg></div><div class="doc-info"><h4>Liquidacion_Sueldos_Junio.xlsx</h4><div class="doc-meta">Constructora Delta SA • Exp 2024-0123 • 12/06/2026 • 845 KB</div></div><div class="action-icons"><button class="icon-btn"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></button></div></div>
+    </div>
+</section>
+
+<!-- ====== TAREAS ====== -->
+<section class="section" id="tareas">
+    <div class="section-header"><div class="section-title"><h1>Tareas</h1><p>Seguimiento de tareas y pendientes</p></div></div>
+    <div class="table-wrapper">
+        <div class="table-header">
+            <div class="filters">
+                <button class="filter-btn active" data-tarea-filter="todas">Todas</button>
+                <button class="filter-btn" data-tarea-filter="hacer">Por hacer</button>
+                <button class="filter-btn" data-tarea-filter="progreso">En progreso</button>
+                <button class="filter-btn" data-tarea-filter="completada">Completadas</button>
+            </div>
+        </div>
+        <div class="table-scroll">
+            <table>
+                <thead><tr><th>Título</th><th>Cliente</th><th>Expediente</th><th>Estado</th><th>Prioridad</th><th>Fecha límite</th><th>Acciones</th></tr></thead>
+                <tbody id="tablaTareas">
+                    <tr data-tarea-estado="hacer"><td><strong>Revisar documentación IVA</strong></td><td>Comercial del Norte</td><td>2024-0142</td><td><span class="badge badge-tramite">Por hacer</span></td><td><span class="badge badge-alta">Alta</span></td><td>22/07/2026</td><td><button class="btn btn-sm btn-secondary" onclick="cambiarEstadoTarea(this)">Cambiar</button></td></tr>
+                    <tr data-tarea-estado="progreso"><td><strong>Preparar balance anual</strong></td><td>Agro Sur SRL</td><td>2024-0189</td><td><span class="badge badge-tramite">En progreso</span></td><td><span class="badge badge-media">Media</span></td><td>03/08/2026</td><td><button class="btn btn-sm btn-secondary" onclick="cambiarEstadoTarea(this)">Cambiar</button></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ====== CALENDARIO ====== -->
+<section class="section" id="calendario">
+    <div class="section-header"><div class="section-title"><h1>Calendario</h1><p>Agenda de eventos y vencimientos</p></div></div>
+    <div class="cards-grid">
+        <div class="glass-light" style="padding:1.75rem;border-radius:24px;">
+            <h3 style="margin-bottom:1rem;color:var(--text);transition:color 0.4s ease;">Julio 2026</h3>
+            <div class="calendar-grid">
+                <div class="calendar-day-header">L</div><div class="calendar-day-header">M</div><div class="calendar-day-header">M</div><div class="calendar-day-header">J</div><div class="calendar-day-header">V</div><div class="calendar-day-header">S</div><div class="calendar-day-header">D</div>
+                <div class="calendar-day inactive">29</div><div class="calendar-day inactive">30</div><div class="calendar-day">1</div><div class="calendar-day">2</div><div class="calendar-day">3</div><div class="calendar-day">4</div><div class="calendar-day">5</div>
+                <div class="calendar-day">6</div><div class="calendar-day">7</div><div class="calendar-day">8</div><div class="calendar-day">9</div><div class="calendar-day marked">10</div><div class="calendar-day">11</div><div class="calendar-day">12</div>
+                <div class="calendar-day">13</div><div class="calendar-day">14</div><div class="calendar-day">15</div><div class="calendar-day">16</div><div class="calendar-day">17</div><div class="calendar-day today">18</div><div class="calendar-day">19</div>
+                <div class="calendar-day marked">20</div><div class="calendar-day">21</div><div class="calendar-day marked">22</div><div class="calendar-day">23</div><div class="calendar-day">24</div><div class="calendar-day">25</div><div class="calendar-day">26</div>
+                <div class="calendar-day">27</div><div class="calendar-day marked">28</div><div class="calendar-day">29</div><div class="calendar-day">30</div><div class="calendar-day">31</div>
+            </div>
+        </div>
+        <div class="glass-light" style="padding:1.75rem;border-radius:24px;">
+            <h3 style="margin-bottom:1rem;color:var(--text);transition:color 0.4s ease;">Próximos eventos</h3>
+            <div style="display:flex;flex-direction:column;gap:0.75rem;">
+                <div style="padding:0.875rem;background:var(--red-light);border-radius:14px;border-left:3px solid var(--red);">
+                    <h4 style="font-size:0.875rem;font-weight:700;margin-bottom:0.25rem;color:var(--text);transition:color 0.4s ease;">Vencimiento DDJJ IVA</h4>
+                    <p style="font-size:0.75rem;color:var(--text-light);margin-bottom:0.5rem;">Comercial del Norte</p>
+                    <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;color:var(--text-light);">22/07/2026 - 10:00 hs</div>
+                </div>
+                <div style="padding:0.875rem;background:var(--yellow-light);border-radius:14px;border-left:3px solid var(--yellow);">
+                    <h4 style="font-size:0.875rem;font-weight:700;margin-bottom:0.25rem;color:var(--text);transition:color 0.4s ease;">Reunión con cliente</h4>
+                    <p style="font-size:0.75rem;color:var(--text-light);margin-bottom:0.5rem;">Farmacia Central</p>
+                    <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;color:var(--text-light);">28/07/2026 - 15:00 hs</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== INFORMES ====== -->
+<section class="section" id="informes">
+    <div class="section-header"><div class="section-title"><h1>Informes</h1><p>Estadísticas y reportes del estudio</p></div></div>
+    <div class="cards-grid" style="margin-bottom:1.5rem;">
+        <div class="chart-container"><h3>Expedientes por Mes</h3><canvas id="chartExpedientes" style="max-height:250px;"></canvas></div>
+        <div class="chart-container"><h3>Estado de Expedientes</h3><canvas id="chartEstado" style="max-height:250px;"></canvas></div>
+    </div>
+    <div class="table-wrapper">
+        <div class="table-header"><h2>Resumen por Cliente</h2></div>
+        <div class="table-scroll">
+            <table>
+                <thead><tr><th>Cliente</th><th>Total expedientes</th><th>Activos</th><th>En trámite</th><th>Finalizados</th><th>Ingresos último mes</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Agro Sur SRL</strong></td><td>12</td><td>5</td><td>4</td><td>3</td><td class="numbers">$850,000</td></tr>
+                    <tr><td><strong>Constructora Delta SA</strong></td><td>18</td><td>8</td><td>6</td><td>4</td><td class="numbers">$1,250,000</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ====== CONFIGURACIÓN ====== -->
+<section class="section" id="configuracion">
+    <div class="section-header"><div class="section-title"><h1>Configuración</h1><p>Ajustes del sistema y estudio contable</p></div></div>
+    <div class="glass-light" style="border-radius:24px;padding:1.75rem;margin-bottom:1.5rem;">
+        <h3 style="margin-bottom:1.5rem;color:var(--text);transition:color 0.4s ease;">Datos del Estudio</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.25rem;">
+            <div class="form-group"><label class="form-label">Nombre del estudio</label><input type="text" class="form-input" value="Gestión Contable S&S"></div>
+            <div class="form-group"><label class="form-label">CUIT</label><input type="text" class="form-input" value="30-71234567-8"></div>
+            <div class="form-group"><label class="form-label">Dirección</label><input type="text" class="form-input" value="Av. Corrientes 1234, CABA"></div>
+            <div class="form-group"><label class="form-label">Teléfono</label><input type="text" class="form-input" value="+54 11 4567-8900"></div>
+            <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" value="contacto@s&s.com.ar"></div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:1rem;">Guardar Cambios</button>
+    </div>
+
+    <div class="glass-light" style="border-radius:24px;padding:1.75rem;margin-bottom:1.5rem;">
+        <h3 style="margin-bottom:1.5rem;color:var(--text);transition:color 0.4s ease;">Notificaciones</h3>
+        <div class="checkbox-group"><input type="checkbox" id="notif1" checked><label for="notif1">Alertas de vencimientos por email</label></div>
+        <div class="checkbox-group"><input type="checkbox" id="notif2" checked><label for="notif2">Notificaciones de nuevos expedientes</label></div>
+        <div class="checkbox-group"><input type="checkbox" id="notif3"><label for="notif3">Resumen semanal de actividad</label></div>
+    </div>
+
+    <div class="glass-light" style="border-radius:24px;padding:1.75rem;">
+        <h3 style="margin-bottom:1rem;color:var(--text);transition:color 0.4s ease;">Copia de Seguridad</h3>
+        <p style="color:var(--text-light);font-size:0.875rem;margin-bottom:1.5rem;">Realice copias de seguridad periódicas de toda la información del sistema.</p>
+        <button class="btn btn-primary">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Realizar Copia de Seguridad
+        </button>
+    </div>
+</section>
+</main>
+
+<script>
+const sidebar = document.getElementById('sidebar');
+const mainContent = document.getElementById('mainContent');
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const overlay = document.getElementById('overlay');
+const menuItems = document.querySelectorAll('.menu-item');
+const sections = document.querySelectorAll('.section');
+const chatToggle = document.getElementById('chatToggle');
+const chatSidebar = document.getElementById('chatSidebar');
+const closeChatBtn = document.getElementById('closeChatBtn');
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+
+// ====== THEME TOGGLE ======
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeIcon.textContent = theme === 'light' ? '☀️' : '🌙';
+}
+
+if (localStorage.getItem('theme')) {
+    setTheme(localStorage.getItem('theme'));
+} else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+    setTheme('light');
+}
+
+themeToggle.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    setTheme(current === 'light' ? 'dark' : 'light');
+});
+
+// ====== SIDEBAR TOGGLE ======
+hamburgerBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('active');
+});
+
+overlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+});
+
+// ====== CHAT TOGGLE ======
+chatToggle.addEventListener('click', () => {
+    chatSidebar.classList.toggle('open');
+    mainContent.classList.toggle('chat-open');
+});
+
+closeChatBtn.addEventListener('click', () => {
+    chatSidebar.classList.remove('open');
+    mainContent.classList.remove('chat-open');
+});
+
+// ====== NAVEGACIÓN ======
+menuItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetSection = item.getAttribute('data-section');
+        menuItems.forEach(mi => mi.classList.remove('active'));
+        item.classList.add('active');
+        sections.forEach(section => section.classList.remove('active'));
+        document.getElementById(targetSection).classList.add('active');
+        if (window.innerWidth <= 768) {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (targetSection === 'dashboard') setTimeout(initCharts, 100);
+    });
+});
+
+// ====== CONTADOR ANIMADO ======
+function animateCounter(element) {
+    const target = parseInt(element.getAttribute('data-target'));
+    const prefix = element.getAttribute('data-prefix') || '';
+    const suffix = element.getAttribute('data-suffix') || '';
+    const duration = 1500;
+    const step = target / (duration / 16);
+    let current = 0;
+    const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+            element.textContent = prefix + target.toLocaleString('es-AR') + suffix;
+            clearInterval(timer);
+        } else {
+            element.textContent = prefix + Math.floor(current).toLocaleString('es-AR') + suffix;
+        }
+    }, 16);
+}
+
+window.addEventListener('load', () => {
+    document.querySelectorAll('.metric-value[data-target]').forEach(animateCounter);
+    initCharts();
+});
+
+// ====== CHARTS ======
+let chartIngresos, chartExpedientes, chartEstado;
+
+function initCharts() {
+    const ctxIngresos = document.getElementById('chartIngresos');
+    if (ctxIngresos && !chartIngresos) {
+        chartIngresos = new Chart(ctxIngresos, {
+            type: 'line',
+            data: {
+                labels: ['Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
+                datasets: [{
+                    label: 'Ingresos',
+                    data: [620000, 680000, 710000, 695000, 780000, 847200],
+                    borderColor: '#8b5cf6',
+                    backgroundColor: 'rgba(139,92,246,0.08)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#8b5cf6',
+                    pointBorderColor: 'var(--bg-start)',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(15,23,42,0.9)',
+                        padding: 12,
+                        borderRadius: 12,
+                        callbacks: { label: (context) => '$' + context.parsed.y.toLocaleString('es-AR') }
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: false, ticks: { callback: (value) => '$' + (value/1000).toFixed(0) + 'k', color: '#64748B' }, grid: { color: 'rgba(100,116,139,0.05)' } },
+                    x: { ticks: { color: '#64748B' }, grid: { display: false } }
+                }
+            }
+        });
+    }
+
+    const ctxExp = document.getElementById('chartExpedientes');
+    if (ctxExp && !chartExpedientes) {
+        chartExpedientes = new Chart(ctxExp, {
+            type: 'bar',
+            data: {
+                labels: ['Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
+                datasets: [{
+                    label: 'Expedientes',
+                    data: [32, 40, 24, 48, 36, 56],
+                    backgroundColor: 'rgba(139,92,246,0.6)',
+                    borderColor: '#8b5cf6',
+                    borderWidth: 1,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, ticks: { color: '#64748B' }, grid: { color: 'rgba(100,116,139,0.05)' } },
+                    x: { ticks: { color: '#64748B' }, grid: { display: false } }
+                }
+            }
+        });
+    }
+
+    const ctxEstado = document.getElementById('chartEstado');
+    if (ctxEstado && !chartEstado) {
+        chartEstado = new Chart(ctxEstado, {
+            type: 'doughnut',
+            data: {
+                labels: ['Activos', 'En trámite', 'Finalizados'],
+                datasets: [{
+                    data: [60, 25, 15],
+                    backgroundColor: ['#8b5cf6', '#f59e0b', '#10b981'],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '75%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: { size: 13, weight: 600 },
+                            color: '#94a3b8'
+                        }
+                    }
+                }
+            }
+        });
+    }
+}
+
+// ====== FILTROS ======
+document.querySelectorAll('[data-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+        document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('#tablaExpedientes tbody tr').forEach(row => {
+            row.style.display = (filter === 'todos' || row.getAttribute('data-estado') === filter) ? '' : 'none';
+        });
+    });
+});
+
+// ====== BÚSQUEDAS ======
+['searchClientes', 'searchExpedientes', 'searchFacturas'].forEach(id => {
+    const input = document.getElementById(id);
+    if (input) {
+        input.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const table = id === 'searchClientes' ? '#tablaClientes' : id === 'searchExpedientes' ? '#tablaExpedientes' : '#tablaFacturas';
+            document.querySelectorAll(table + ' tbody tr').forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(term) ? '' : 'none';
+            });
+        });
+    }
+});
+
+// ====== CAMBIAR ESTADO DE TAREA ======
+function cambiarEstadoTarea(btn) {
+    const row = btn.closest('tr');
+    const estadoCell = row.querySelector('td:nth-child(4) .badge');
+    const current = row.getAttribute('data-tarea-estado');
+    const estados = {
+        'hacer': { next: 'progreso', text: 'En progreso', class: 'badge-tramite' },
+        'progreso': { next: 'completada', text: 'Completada', class: 'badge-active' },
+        'completada': { next: 'hacer', text: 'Por hacer', class: 'badge-tramite' }
+    };
+    const nuevo = estados[current];
+    row.setAttribute('data-tarea-estado', nuevo.next);
+    estadoCell.className = 'badge ' + nuevo.class;
+    estadoCell.textContent = nuevo.text;
+}
+
+// ====== CALCULADORA DE HONORARIOS ======
+function calcularHonorarios() {
+    const servicio = parseFloat(document.getElementById('tipoServicio').value);
+    const complejidad = parseFloat(document.getElementById('complejidad').value);
+    const horas = parseFloat(document.getElementById('horas').value);
+    const total = servicio * complejidad + (horas * 3500);
+    document.getElementById('resultadoHonorarios').textContent = '$' + total.toLocaleString('es-AR');
+}
+
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+    }
+});
+</script>
+</body>
+</html>

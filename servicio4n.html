@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>LexAI • Studio</title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+
+        :root {
+            --primary: 99 102 241;
+        }
+        * {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        .title-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            background: #0a0a0f;
+            color: #f8fafc;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(148, 163, 184, 0.12);
+        }
+
+        .glass-dark {
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .sidebar-mobile {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 85%;
+            max-width: 320px;
+            height: 100vh;
+            z-index: 60;
+            transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(10, 10, 15, 0.97);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid rgba(148, 163, 184, 0.15);
+            overflow-y: auto;
+            padding: 1.5rem 1rem;
+        }
+
+        .sidebar-mobile.open {
+            left: 0;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 55;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .sidebar-link {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 1.5rem;
+            padding: 0.9rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+            color: #cbd5e1;
+            cursor: pointer;
+        }
+
+        .sidebar-link:hover {
+            background: rgba(99, 102, 241, 0.12);
+            transform: translateX(4px);
+            color: #f8fafc;
+        }
+
+        .sidebar-link.active {
+            background: rgba(99, 102, 241, 0.18);
+            border-left: 4px solid rgb(99 102 241);
+            color: #f8fafc;
+        }
+
+        .chat-bubble-ai {
+            background: rgba(30, 41, 59, 0.95);
+            border-bottom-left-radius: 6px;
+        }
+        .chat-bubble-user {
+            background: rgb(99 102 241);
+            border-bottom-right-radius: 6px;
+        }
+
+        .message-enter {
+            animation: messagePop 0.4s ease forwards;
+        }
+        @keyframes messagePop {
+            from {
+                opacity: 0;
+                transform: translateY(24px) scale(0.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6366f1;
+            border-radius: 20px;
+        }
+
+        input,
+        button,
+        textarea {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .section-container {
+            padding: 0.75rem;
+        }
+
+        @media (min-width: 640px) {
+            .section-container {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar-mobile {
+                position: fixed;
+                left: 0;
+                width: 280px;
+                max-width: 280px;
+                height: calc(100vh - 4rem);
+                top: 4rem;
+                background: rgba(10, 10, 15, 0.92);
+                backdrop-filter: blur(16px);
+                border-right: 1px solid rgba(148, 163, 184, 0.12);
+                padding: 1.5rem 1rem;
+                transform: none;
+                z-index: 10;
+                display: block;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .sidebar-overlay {
+                display: none;
+            }
+            .menu-toggle {
+                display: none !important;
+            }
+            .main-content {
+                margin-left: 280px;
+            }
+        }
+
+        .sidebar-mobile::-webkit-scrollbar {
+            width: 2px;
+        }
+
+        .feature-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .badge-sim {
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        /* ===== CHAT SCROLL FIX ===== */
+        .chat-container {
+            height: calc(100vh - 110px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-messages-wrapper {
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+            /* <-- clave para que flex respete overflow */
+            padding: 1rem 1.5rem;
+            background: radial-gradient(#1e293740 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .chat-messages-wrapper .space-y-5 {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .chat-input-area {
+            flex-shrink: 0;
+            padding: 0.75rem 1.5rem;
+            border-top: 1px solid rgba(71, 85, 105, 0.6);
+            background: rgba(15, 23, 42, 0.2);
+        }
+
+        @media (max-width: 640px) {
+            .chat-messages-wrapper {
+                padding: 0.75rem 1rem;
+            }
+            .chat-input-area {
+                padding: 0.5rem 1rem;
+            }
+            .chat-container {
+                height: calc(100vh - 100px);
+            }
+        }
+        /* ===== FIN CHAT SCROLL FIX ===== */
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="glass-dark fixed top-0 left-0 right-0 z-50 border-b border-slate-800/80 px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <button id="menuToggle" class="menu-toggle p-2 -ml-2 rounded-xl hover:bg-white/10 transition-colors" aria-label="Abrir menú">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="4" y1="6" x2="20" y2="6"></line>
+                    <line x1="4" y1="12" x2="20" y2="12"></line>
+                    <line x1="4" y1="18" x2="20" y2="18"></line>
+                </svg>
+            </button>
+
+            <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 via-violet-600 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                <span class="text-xl font-bold text-white title-font tracking-tighter">L</span>
+            </div>
+            <div class="title-font text-2xl font-semibold tracking-tighter bg-gradient-to-r from-indigo-300 to-violet-300 bg-clip-text text-transparent">LexAI</div>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <button onclick="downloadHTML()" class="flex items-center gap-1.5 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-xs sm:text-sm font-medium transition-all active:scale-95">
+                <span>⬇</span>
+                <span class="hidden xs:inline">Descargar</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Overlay para cerrar sidebar en mobile -->
+    <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar(false)"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar-mobile">
+        <div class="flex flex-col h-full">
+            <div class="flex-1 space-y-1">
+                <div onclick="switchSection('chat'); toggleSidebar(false);" class="sidebar-link active" data-section="chat">
+                    <span class="text-xl">💬</span>
+                    <span>Asistente IA</span>
+                </div>
+
+                <div class="mt-6 px-3 text-[10px] uppercase tracking-widest text-slate-500 font-semibold">Estudio</div>
+                <div onclick="switchSection('dashboard'); toggleSidebar(false);" class="sidebar-link" data-section="dashboard">📊 Dashboard</div>
+                <div onclick="switchSection('conversaciones'); toggleSidebar(false);" class="sidebar-link" data-section="conversaciones">💬 Conversaciones</div>
+                <div onclick="switchSection('clientes'); toggleSidebar(false);" class="sidebar-link" data-section="clientes">👥 Clientes</div>
+                <div onclick="switchSection('documentos'); toggleSidebar(false);" class="sidebar-link" data-section="documentos">
+                    📄 Documentos
+                    <span class="ml-auto text-[9px] bg-emerald-500/30 text-emerald-300 px-2 py-0.5 rounded-full">OCR</span>
+                </div>
+
+                <div class="mt-6 px-3 text-[10px] uppercase tracking-widest text-slate-500 font-semibold">Herramientas</div>
+                <div onclick="switchSection('recordatorios'); toggleSidebar(false);" class="sidebar-link" data-section="recordatorios">⏰ Recordatorios</div>
+                <div onclick="switchSection('automatizaciones'); toggleSidebar(false);" class="sidebar-link" data-section="automatizaciones">⚙️ Automatizaciones</div>
+                <div onclick="switchSection('configuracion'); toggleSidebar(false);" class="sidebar-link" data-section="configuracion">⚙ Configuración</div>
+            </div>
+
+            <div class="border-t border-slate-800/60 pt-4 mt-4 text-xs text-slate-500 px-3">
+                LexAI v2.0 · Studio
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content transition-all duration-300 pt-16 min-h-screen">
+        <div class="section-container max-w-6xl mx-auto">
+
+            <!-- CHAT PRINCIPAL - CORREGIDO -->
+            <div id="chat-section" class="section">
+                <div class="chat-container glass rounded-3xl overflow-hidden border border-slate-700/60 shadow-2xl shadow-indigo-500/5">
+
+                    <!-- Header del chat -->
+                    <div class="flex-shrink-0 p-4 sm:p-6 border-b border-slate-700/60 flex items-center gap-4 bg-slate-900/30">
+                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-semibold shadow-lg shadow-indigo-500/20">MG</div>
+                        <div>
+                            <div class="font-semibold text-base sm:text-lg">María González</div>
+                            <div class="text-emerald-400 text-xs sm:text-sm flex items-center gap-2">
+                                <div class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                                En línea
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contenedor de mensajes con scroll -->
+                    <div id="chat-messages-wrapper" class="chat-messages-wrapper">
+                        <div id="chat-messages" class="space-y-5">
+                            <!-- Los mensajes se renderizan aquí -->
+                        </div>
+                    </div>
+
+                    <!-- Input del chat -->
+                    <div class="chat-input-area">
+                        <div class="relative flex items-center gap-2">
+                            <input id="chat-input" type="text" class="flex-1 bg-slate-900/80 border border-slate-600/60 focus:border-indigo-500 rounded-3xl px-5 sm:px-8 py-4 sm:py-5 text-base sm:text-lg outline-none placeholder:text-slate-500 transition-all" placeholder="Escribe tu consulta legal...">
+                            <button onclick="sendMessage()" class="shrink-0 bg-indigo-600 hover:bg-indigo-500 active:scale-95 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center text-2xl transition-all shadow-lg shadow-indigo-500/20">
+                                →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DASHBOARD -->
+            <div id="dashboard-section" class="section hidden">
+                <div class="space-y-6">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl font-semibold">📊 Dashboard</h2>
+                        <span class="badge-sim">Simulación</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="feature-card">
+                            <div class="text-sm text-slate-400">Casos activos</div>
+                            <div class="text-3xl font-bold mt-1 text-indigo-400">24</div>
+                            <div class="text-xs text-emerald-400 mt-2">↑ 12% vs mes anterior</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="text-sm text-slate-400">Clientes nuevos</div>
+                            <div class="text-3xl font-bold mt-1 text-violet-400">+12</div>
+                            <div class="text-xs text-emerald-400 mt-2">↑ 8% esta semana</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="text-sm text-slate-400">Documentos</div>
+                            <div class="text-3xl font-bold mt-1 text-fuchsia-400">187</div>
+                            <div class="text-xs text-slate-400 mt-2">45 con OCR</div>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="text-sm text-slate-400 mb-3">Actividad reciente</div>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between border-b border-slate-800/40 pb-2">
+                                <span>📄 Contrato laboral revisado</span>
+                                <span class="text-slate-500">hace 2h</span>
+                            </div>
+                            <div class="flex justify-between border-b border-slate-800/40 pb-2">
+                                <span>👥 Nueva reunión con cliente</span>
+                                <span class="text-slate-500">hace 4h</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>⚖️ Actualización de normativa</span>
+                                <span class="text-slate-500">hace 6h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONVERSACIONES -->
+            <div id="conversaciones-section" class="section hidden">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl font-semibold">💬 Conversaciones</h2>
+                        <span class="badge-sim">Simulación</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="feature-card flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center">JD</div>
+                            <div class="flex-1">
+                                <div class="font-medium">Juan Díaz</div>
+                                <div class="text-sm text-slate-400">Último mensaje: Revisión de contrato</div>
+                            </div>
+                            <span class="text-xs text-slate-500">14:30</span>
+                        </div>
+                        <div class="feature-card flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center">AR</div>
+                            <div class="flex-1">
+                                <div class="font-medium">Ana Rodríguez</div>
+                                <div class="text-sm text-slate-400">Último mensaje: Consulta laboral</div>
+                            </div>
+                            <span class="text-xs text-slate-500">12:15</span>
+                        </div>
+                        <div class="feature-card flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center">CP</div>
+                            <div class="flex-1">
+                                <div class="font-medium">Carlos Pérez</div>
+                                <div class="text-sm text-slate-400">Último mensaje: Documentos listos</div>
+                            </div>
+                            <span class="text-xs text-slate-500">ayer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CLIENTES -->
+            <div id="clientes-section" class="section hidden">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl font-semibold">👥 Clientes</h2>
+                        <span class="badge-sim">Simulación</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="feature-card">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 flex items-center justify-center text-lg font-bold">MG</div>
+                                <div>
+                                    <div class="font-medium">María González</div>
+                                    <div class="text-sm text-slate-400">maria.g@email.com</div>
+                                </div>
+                            </div>
+                            <div class="mt-3 flex gap-2 text-xs">
+                                <span class="bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded-full">Laboral</span>
+                                <span class="bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full">Activo</span>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-rose-400 to-orange-500 flex items-center justify-center text-lg font-bold">JD</div>
+                                <div>
+                                    <div class="font-medium">Juan Díaz</div>
+                                    <div class="text-sm text-slate-400">juan.d@email.com</div>
+                                </div>
+                            </div>
+                            <div class="mt-3 flex gap-2 text-xs">
+                                <span class="bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded-full">Civil</span>
+                                <span class="bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full">Activo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DOCUMENTOS -->
+            <div id="documentos-section" class="section hidden">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl font-semibold">📄 Documentos</h2>
+                        <span class="badge-sim">OCR activo</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="feature-card flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">📄</span>
+                                <div>
+                                    <div class="font-medium">Contrato laboral - María G.</div>
+                                    <div class="text-sm text-slate-400">PDF · 2.4 MB</div>
+                                </div>
+                            </div>
+                            <span class="bg-emerald-500/20 text-emerald-300 text-xs px-3 py-1 rounded-full">OCR completado</span>
+                        </div>
+                        <div class="feature-card flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">📄</span>
+                                <div>
+                                    <div class="font-medium">Acuerdo comercial - Juan D.</div>
+                                    <div class="text-sm text-slate-400">PDF · 1.8 MB</div>
+                                </div>
+                            </div>
+                            <span class="bg-yellow-500/20 text-yellow-300 text-xs px-3 py-1 rounded-full">Procesando</span>
+                        </div>
+                        <div class="feature-card flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">📄</span>
+                                <div>
+                                    <div class="font-medium">Dictamen legal - Ana R.</div>
+                                    <div class="text-sm text-slate-400">DOCX · 856 KB</div>
+                                </div>
+                            </div>
+                            <span class="bg-emerald-500/20 text-emerald-300 text-xs px-3 py-1 rounded-full">OCR completado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RECORDATORIOS -->
+            <div id="recordatorios-section" class="section hidden">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl font-semibold">⏰ Recordatorios</h2>
+                        <span class="badge-sim">Simulación</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="feature-card flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center text-2xl">🔔</div>
+                            <div class="flex-1">
+                                <div class="font-medium">Reunión con cliente</div>
+                                <div class="text-sm text-slate-400">Mañana 10:00 AM · Sala 3</div>
+                            </div>
+                            <span class="text-xs text-red-400">urgente</span>
+                        </div>
+                        <div class="feature-card flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-2xl">📋</div>
+                            <div class="flex-1">
+                                <div class="font-medium">Entrega de documentos</div>
+                                <div class="text-sm text-slate-400">Viernes 18:00</div>
+                            </div>
+                            <span class="text-xs text-slate-400">en 3 días</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AUTOMATIZACIONES -->
+            <div id="automatizaciones-section" class="section hidden">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl font-semibold">⚙️ Automatizaciones</h2>
+                        <span class="badge-sim">Simulación</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="feature-card">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">🤖</span>
+                                <div>
+                                    <div class="font-medium">Análisis automático</div>
+                                    <div class="text-sm text-slate-400">Clasifica documentos entrantes</div>
+                                </div>
+                            </div>
+                            <div class="mt-3 flex items-center gap-2">
+                                <div class="w-3 h-3 bg-emerald-500 rounded-full"></div>
+                                <span class="text-xs text-emerald-400">Activo</span>
+                            </div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">📧</span>
+                                <div>
+                                    <div class="font-medium">Envío de recordatorios</div>
+                                    <div class="text-sm text-slate-400">Notificaciones automáticas</div>
+                                </div>
+                            </div>
+                            <div class="mt-3 flex items-center gap-2">
+                                <div class="w-3 h-3 bg-emerald-500 rounded-full"></div>
+                                <span class="text-xs text-emerald-400">Activo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONFIGURACIÓN -->
+            <div id="configuracion-section" class="section hidden">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl font-semibold">⚙ Configuración</h2>
+                        <span class="badge-sim">Simulación</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="feature-card flex items-center justify-between">
+                            <div>
+                                <div class="font-medium">Notificaciones</div>
+                                <div class="text-sm text-slate-400">Recibir alertas por email</div>
+                            </div>
+                            <div class="w-12 h-6 bg-indigo-500/20 rounded-full p-1 cursor-pointer">
+                                <div class="w-4 h-4 bg-indigo-500 rounded-full translate-x-6 transition-all"></div>
+                            </div>
+                        </div>
+                        <div class="feature-card flex items-center justify-between">
+                            <div>
+                                <div class="font-medium">Idioma</div>
+                                <div class="text-sm text-slate-400">Español (Argentina)</div>
+                            </div>
+                            <span class="text-sm text-slate-400">▼</span>
+                        </div>
+                        <div class="feature-card flex items-center justify-between">
+                            <div>
+                                <div class="font-medium">Modo oscuro</div>
+                                <div class="text-sm text-slate-400">Activo</div>
+                            </div>
+                            <div class="w-12 h-6 bg-indigo-500/20 rounded-full p-1 cursor-pointer">
+                                <div class="w-4 h-4 bg-indigo-500 rounded-full translate-x-6 transition-all"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // ========== SIDEBAR TOGGLE ==========
+        function toggleSidebar(open) {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (open === true) {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.getElementById('menuToggle').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isOpen = document.getElementById('sidebar').classList.contains('open');
+            toggleSidebar(!isOpen);
+        });
+
+        // ========== NAVEGACIÓN ==========
+        function switchSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+
+            const target = document.getElementById(section + '-section');
+            if (target) target.classList.remove('hidden');
+
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+                const linkSection = link.getAttribute('data-section');
+                if (linkSection === section) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // ========== CHAT ==========
+        let messages = [
+            { type: 'ai', content: 'Hola María, ¿en qué puedo ayudarte hoy con tu caso laboral?', time: '14:32' }
+        ];
+
+        function renderMessages() {
+            const container = document.getElementById('chat-messages');
+            container.innerHTML = messages.map((msg, i) => `
+                    <div class="flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'} message-enter" style="animation-delay: ${i * 0.05}s">
+                        <div class="${msg.type === 'user' ? 'chat-bubble-user text-white' : 'chat-bubble-ai'} px-5 py-3.5 rounded-3xl max-w-[85%] sm:max-w-[75%] shadow-lg">
+                            <p class="text-sm sm:text-base leading-relaxed">${msg.content}</p>
+                            <span class="text-[10px] sm:text-xs opacity-60 mt-1.5 block">${msg.time}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+            // Scroll automático al último mensaje
+            const wrapper = document.getElementById('chat-messages-wrapper');
+            wrapper.scrollTop = wrapper.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const time = new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+            messages.push({ type: 'user', content: text, time });
+            renderMessages();
+            input.value = '';
+
+            setTimeout(() => {
+                const now = new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+                messages.push({
+                    type: 'ai',
+                    content: 'Entendido. Según la normativa vigente, tienes derecho a indemnización. ¿Quieres que prepare un documento formal o analice el contrato?',
+                    time: now
+                });
+                renderMessages();
+            }, 900);
+        }
+
+        // ========== DOWNLOAD ==========
+        function downloadHTML() {
+            const content = document.documentElement.outerHTML;
+            const blob = new Blob([content], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'LexAI-Studio-Mobile-First.html';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // ========== INIT ==========
+        window.onload = function() {
+            renderMessages();
+            const input = document.getElementById('chat-input');
+            input.addEventListener('keypress', e => {
+                if (e.key === 'Enter') sendMessage();
+            });
+
+            const mediaQuery = window.matchMedia('(min-width: 1024px)');
+
+            function handleDesktop(ev) {
+                const overlay = document.getElementById('sidebarOverlay');
+                const sidebar = document.getElementById('sidebar');
+                if (ev.matches) {
+                    overlay.classList.remove('active');
+                    sidebar.classList.remove('open');
+                    document.body.style.overflow = '';
+                }
+            }
+            mediaQuery.addEventListener('change', handleDesktop);
+            handleDesktop(mediaQuery);
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 1024) {
+                    document.getElementById('sidebar').classList.remove('open');
+                    document.getElementById('sidebarOverlay').classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        };
+    </script>
+</body>
+</html>
