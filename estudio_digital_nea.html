@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estudio Digital NEA · Software inteligente para profesionales</title>
+    <meta name="description" content="Diseñamos páginas web, software y soluciones inteligentes para abogados, escribanos y contadores públicos. Tecnología de vanguardia para estudios profesionales." />
+    <meta property="og:title" content="Estudio Digital NEA · Software inteligente para profesionales" />
+    <meta property="og:description" content="La tecnología que impulsa la nueva generación de estudios profesionales." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0b0d0e;
+            --graphite: #1a1e21;
+            --slate: #2c3136;
+            --white: #f7fafc;
+            --petrol: #1a3b4f;
+            --steel: #4b6b7f;
+            --ice: #d4e4ed;
+            --gray-soft: #eef2f5;
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --shadow-glass: 0 20px 60px -20px rgba(0, 0, 0, 0.6);
+            --transition-smooth: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --bg-primary: #0b0d0e;
+            --bg-secondary: #1a1e21;
+            --text-primary: #f7fafc;
+            --text-secondary: #b0c8d4;
+            --text-muted: #889ba8;
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --card-border: rgba(255, 255, 255, 0.03);
+            --mesh-opacity: 0.8;
+            --nav-bg: rgba(11, 13, 14, 0.7);
+            --section-title: linear-gradient(135deg, #eaf0f5, #aac0ce);
+            --badge-bg: rgba(75, 107, 127, 0.15);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #dce4ea;
+            --bg-secondary: #c8d2da;
+            --text-primary: #0b1a26;
+            --text-secondary: #1a3b4f;
+            --text-muted: #2c4b5e;
+            --card-bg: rgba(255, 255, 255, 0.35);
+            --card-border: rgba(26, 59, 79, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.35);
+            --glass-border: rgba(26, 59, 79, 0.06);
+            --shadow-glass: 0 20px 60px -20px rgba(0, 0, 0, 0.08);
+            --mesh-opacity: 0.15;
+            --nav-bg: rgba(220, 228, 234, 0.85);
+            --section-title: linear-gradient(135deg, #0b1a26, #1a3b4f);
+            --badge-bg: rgba(26, 59, 79, 0.08);
+        }
+
+        [data-theme="light"] .mesh-bg {
+            opacity: 0.15;
+        }
+        [data-theme="light"] .mesh-bg::after {
+            opacity: 0.1;
+        }
+        [data-theme="light"] .navbar {
+            background: var(--nav-bg);
+            border-bottom: 1px solid rgba(26, 59, 79, 0.06);
+        }
+        [data-theme="light"] .nav-links a {
+            color: #1a3b4f;
+        }
+        [data-theme="light"] .nav-links a:hover {
+            color: #0b1a26;
+            border-bottom-color: #1a3b4f;
+        }
+        [data-theme="light"] .btn-primary {
+            background: #0b1a26;
+            color: white;
+        }
+        [data-theme="light"] .btn-primary:hover {
+            background: #1a3b4f;
+        }
+        [data-theme="light"] .btn-outline {
+            border-color: rgba(26, 59, 79, 0.2);
+            color: #0b1a26;
+        }
+        [data-theme="light"] .btn-outline:hover {
+            background: rgba(26, 59, 79, 0.06);
+            border-color: rgba(26, 59, 79, 0.4);
+        }
+        [data-theme="light"] .bento-card,
+        [data-theme="light"] .testimonial-card,
+        [data-theme="light"] .success-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-color: rgba(26, 59, 79, 0.06);
+            box-shadow: 0 10px 40px -20px rgba(0, 0, 0, 0.05);
+        }
+        [data-theme="light"] .bento-card:hover,
+        [data-theme="light"] .testimonial-card:hover {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(26, 59, 79, 0.12);
+        }
+        [data-theme="light"] .bento-card h3,
+        [data-theme="light"] .testimonial-name,
+        [data-theme="light"] .stat-number,
+        [data-theme="light"] .faq-question {
+            color: #0b1a26;
+        }
+        [data-theme="light"] .bento-card p,
+        [data-theme="light"] .testimonial-text,
+        [data-theme="light"] .testimonial-role,
+        [data-theme="light"] .stat-label,
+        [data-theme="light"] .faq-answer {
+            color: #1a3b4f;
+        }
+        [data-theme="light"] .logo span {
+            background: linear-gradient(135deg, #0b1a26, #1a3b4f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        [data-theme="light"] .monogram {
+            background: linear-gradient(145deg, #0b1a26, #1a3b4f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        [data-theme="light"] .hamburger span {
+            background: #0b1a26;
+        }
+        [data-theme="light"] .mobile-menu {
+            border-top-color: rgba(26, 59, 79, 0.06);
+        }
+        [data-theme="light"] .theme-toggle {
+            color: #1a3b4f;
+        }
+        [data-theme="light"] .theme-toggle:hover {
+            color: #0b1a26;
+            background: rgba(26, 59, 79, 0.04);
+        }
+        [data-theme="light"] .hero-background::after {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        [data-theme="light"] .hero-content h1 {
+            color: white;
+        }
+        [data-theme="light"] .hero-content .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        [data-theme="light"] .hero-content .description {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        [data-theme="light"] .hero-content .badge {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        [data-theme="light"] .section-title {
+            background: var(--section-title);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        [data-theme="light"] .chat-float a {
+            background: rgba(255, 255, 255, 0.7);
+            color: #0b1a26;
+            border-color: rgba(26, 59, 79, 0.06);
+        }
+        [data-theme="light"] .chat-float a:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+        [data-theme="light"] .card-overlay h3 {
+            color: white;
+        }
+        [data-theme="light"] .card-overlay .desc {
+            color: rgba(255, 255, 255, 0.85);
+        }
+        [data-theme="light"] .card-overlay .badge-servicio {
+            color: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(0, 0, 0, 0.3);
+        }
+        [data-theme="light"] .card-overlay .btn-consultar {
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        [data-theme="light"] .card-overlay .btn-consultar:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+        }
+        [data-theme="light"] .card-dot {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        [data-theme="light"] .card-dot.active {
+            background: white;
+        }
+
+        body {
+            font-family: 'Inter', 'Geist', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ====== ANIMATED MESH ====== */
+        .mesh-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 20% 30%, #0b1a26, #030608 70%);
+            opacity: var(--mesh-opacity);
+            transition: opacity 0.6s ease;
+        }
+        .mesh-bg::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 80% 70%, #1a3b4f, transparent 50%),
+                radial-gradient(circle at 30% 80%, #2c4b5e, transparent 40%);
+            filter: blur(80px);
+            animation: meshPulse 14s ease-in-out infinite alternate;
+            opacity: 0.5;
+        }
+        @keyframes meshPulse {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0.4;
+            }
+            100% {
+                transform: scale(1.2) rotate(3deg);
+                opacity: 0.7;
+            }
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px) saturate(1.2);
+            -webkit-backdrop-filter: blur(12px) saturate(1.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            box-shadow: var(--shadow-glass);
+            transition: background 0.4s ease, border-color 0.4s ease;
+        }
+
+        /* ====== NAVBAR ====== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.8rem 0;
+            background: var(--nav-bg);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+        }
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: -0.03em;
+        }
+        .logo span {
+            background: linear-gradient(135deg, #a0c4d6, #4b6b7f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: background 0.4s ease;
+        }
+        .monogram {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #d4e4ed, #7a9bac);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: background 0.4s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #b0c8d4;
+            align-items: center;
+        }
+        .nav-links a {
+            color: inherit;
+            text-decoration: none;
+            transition: 0.2s;
+            border-bottom: 1px solid transparent;
+        }
+        .nav-links a:hover {
+            color: white;
+            border-bottom-color: #6a8fa0;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+            z-index: 101;
+        }
+        .hamburger span {
+            width: 28px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: block;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem 0;
+            width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 0.5rem;
+        }
+        .mobile-menu.open {
+            display: flex !important;
+        }
+        .mobile-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.4rem 0;
+            transition: 0.2s;
+        }
+        .mobile-menu a:hover {
+            color: var(--text-primary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 30px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            line-height: 1;
+        }
+        .theme-toggle:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #0b0d0e;
+            border: none;
+            padding: 0.6rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .btn-primary:hover {
+            background: #e2edf5;
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(100, 180, 220, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.6rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 500;
+            transition: 0.25s;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* ====== HERO ====== */
+        .hero {
+            padding: 4rem 0 4rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: #0b0d0e;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6) saturate(0.9) contrast(1.1);
+        }
+
+        .hero-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero-content .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.3rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.08;
+            letter-spacing: -0.02em;
+            color: white;
+            margin-bottom: 0.8rem;
+        }
+
+        .hero-content h1 .highlight {
+            color: #d4e4ed;
+        }
+
+        .hero-content .subtitle {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-content .description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .hero-content .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ====== SERVICIOS - CARRUSEL ====== */
+        .servicios-section {
+            padding: 5rem 0;
+            background: var(--bg-primary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            transition: background 0.4s ease, border-color 0.4s ease;
+            overflow: hidden;
+        }
+
+        .servicios-section .section-title {
+            font-size: 2.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            background: var(--section-title);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: background 0.4s ease;
+        }
+
+        .servicios-section .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            transition: color 0.4s ease;
+        }
+
+        .servicios-carrusel-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding: 0.5rem 0;
+            max-width: 480px;
+            margin: 0 auto;
+            border-radius: 1.5rem;
+        }
+
+        .servicios-carrusel-track {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 100%;
+        }
+
+        .servicio-card {
+            min-width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #0b0d0e;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-glass);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .servicio-card:hover {
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-slideshow {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+        }
+
+        .card-slide.active {
+            opacity: 1;
+        }
+
+        .card-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+        }
+
+        /* ====== OVERLAY MEJORADO ====== */
+        .card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 1.8rem 1.5rem;
+            z-index: 2;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.2) 70%, transparent 100%);
+            border-radius: 0 0 1.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .card-overlay .badge-servicio {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+
+        .card-overlay h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.2rem;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-overlay .desc {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            max-width: 90%;
+        }
+
+        /* ====== BOTÓN MEJORADO ====== */
+        .card-overlay .btn-consultar {
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 0.45rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.6rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-family: 'Inter', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-overlay .btn-consultar:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: scale(1.04);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .card-overlay .btn-consultar .arrow {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .card-overlay .btn-consultar:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* Dots dentro de la card */
+        .card-dots {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            display: flex;
+            gap: 0.3rem;
+            z-index: 3;
+        }
+
+        .card-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .card-dot.active {
+            background: white;
+            width: 14px;
+            border-radius: 4px;
+        }
+
+        /* Controles del carrusel */
+        .carrusel-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .carrusel-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--text-secondary);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .carrusel-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        .carrusel-dots {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .carrusel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .carrusel-dot.active {
+            background: white;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* ====== BENTO GRID ====== */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .bento-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(6px);
+            border: 1px solid var(--card-border);
+            border-radius: 2rem;
+            padding: 2rem 1.8rem;
+            transition: all 0.25s;
+            box-shadow: 0 10px 40px -20px rgba(0, 0, 0, 0.6);
+        }
+        .bento-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
+            transform: translateY(-6px);
+            box-shadow: 0 30px 60px -25px rgba(0, 0, 0, 0.8);
+        }
+        .bento-card h3 {
+            font-size: 1.4rem;
+            margin: 1rem 0 0.5rem;
+            color: white;
+            transition: color 0.4s ease;
+        }
+        .bento-card p {
+            color: #b8ccda;
+            font-size: 0.95rem;
+            transition: color 0.4s ease;
+        }
+        .icon-big {
+            font-size: 2.2rem;
+            opacity: 0.8;
+        }
+
+        /* ====== STATS ====== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.02em;
+            transition: color 0.4s ease;
+        }
+        .stat-label {
+            color: #a0b8c8;
+            font-size: 1rem;
+            transition: color 0.4s ease;
+        }
+
+        /* ====== TESTIMONIALS ====== */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(6px);
+            border: 1px solid var(--card-border);
+            border-radius: 2rem;
+            padding: 2rem;
+            transition: all 0.3s;
+            box-shadow: 0 10px 40px -20px rgba(0, 0, 0, 0.6);
+        }
+        .testimonial-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 20px 60px -25px rgba(0, 0, 0, 0.8);
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .testimonial-icon {
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+            flex-shrink: 0;
+            transition: background 0.4s ease;
+        }
+        .testimonial-name {
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.4s ease;
+        }
+        .testimonial-role {
+            color: #889ba8;
+            font-size: 0.85rem;
+            transition: color 0.4s ease;
+        }
+        .testimonial-stars {
+            color: #f5c542;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+        .testimonial-text {
+            color: #b0c8d4;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            transition: color 0.4s ease;
+        }
+        .testimonial-result {
+            display: inline-block;
+        }
+        .result-badge {
+            background: rgba(75, 107, 127, 0.15);
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #b0c8d4;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            font-weight: 500;
+            transition: all 0.4s ease;
+        }
+
+        /* ====== SUCCESS GRID ====== */
+        .success-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .success-card {
+            text-align: center;
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 2rem 1rem;
+            border: 1px solid var(--card-border);
+            transition: all 0.3s;
+        }
+        .success-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-3px);
+        }
+        .success-number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            transition: color 0.4s ease;
+        }
+        .success-label {
+            color: #b0c8d4;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.4s ease;
+        }
+        .success-desc {
+            color: #889ba8;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            transition: color 0.4s ease;
+        }
+
+        /* ====== FAQ ====== */
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 1.2rem 0;
+            cursor: pointer;
+            transition: border-color 0.4s ease;
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: #dce8f0;
+            transition: color 0.4s ease;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, color 0.4s ease;
+            color: #a0b8c8;
+            padding-right: 2rem;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+            padding-top: 0.8rem;
+        }
+
+        /* ====== FORM ====== */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 2.5rem;
+            padding: 3rem;
+            border: 1px solid var(--card-border);
+            transition: all 0.4s ease;
+        }
+        .form-grid input,
+        .form-grid select,
+        .form-grid textarea {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 0.9rem 1.2rem;
+            border-radius: 40px;
+            color: white;
+            font-family: inherit;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        .form-grid input:focus,
+        .form-grid textarea:focus {
+            outline: none;
+            border-color: #4b6b7f;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .form-grid textarea {
+            grid-column: span 2;
+            border-radius: 1.5rem;
+            resize: vertical;
+        }
+        .btn-submit {
+            grid-column: span 2;
+            background: white;
+            color: #0b0d0e;
+            border: none;
+            padding: 1rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+        .btn-submit:hover {
+            background: #e2edf5;
+            transform: scale(1.01);
+        }
+
+        /* ====== FOOTER ====== */
+        .footer {
+            padding: 4rem 0 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+            transition: border-color 0.4s ease;
+        }
+        .footer a {
+            color: #a0b8c8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 0.4rem;
+            transition: color 0.3s;
+        }
+        .footer a:hover {
+            color: white;
+        }
+        .social-icons {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+        .social-icons a {
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+            font-size: 1.4rem;
+        }
+        .social-icons a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ====== BACK TO TOP ====== */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            width: 48px;
+            height: 48px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 99;
+            font-size: 1.4rem;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* ====== CHAT FLOATING ====== */
+        .chat-float {
+            position: fixed;
+            bottom: 7rem;
+            right: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            z-index: 99;
+        }
+        .chat-float a {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.25s;
+            width: fit-content;
+            margin-left: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .chat-float a:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateX(-4px);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        .chat-float a .emoji {
+            font-size: 1.1rem;
+        }
+        .chat-float a .label {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .text-soft {
+            color: #b0c8d4;
+            transition: color 0.4s ease;
+        }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 1024px) {
+            .hero-content h1 {
+                font-size: 3.2rem;
+            }
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .testimonials-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .success-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .servicios-carrusel-wrapper {
+                width: 90vw;
+                max-width: 400px;
+            }
+            .card-overlay {
+                padding: 1.8rem 1.5rem 1.2rem;
+            }
+            .card-overlay h3 {
+                font-size: 1rem;
+            }
+            .card-overlay .desc {
+                font-size: 0.65rem;
+            }
+            .card-overlay .btn-consultar {
+                font-size: 0.55rem;
+                padding: 0.4rem 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none !important;
+            }
+            .hamburger {
+                display: flex !important;
+            }
+            .mobile-menu {
+                display: none;
+                flex-direction: column;
+            }
+            .mobile-menu.open {
+                display: flex !important;
+            }
+            .nav-actions .btn-primary {
+                display: none !important;
+            }
+
+            .hero {
+                padding: 3rem 0 3rem;
+                min-height: 90vh;
+            }
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            .hero-content .subtitle {
+                font-size: 0.75rem;
+                letter-spacing: 2px;
+            }
+            .hero-content .description {
+                font-size: 0.95rem;
+            }
+            .hero-content .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-content .hero-buttons .btn-primary,
+            .hero-content .hero-buttons .btn-outline {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            .success-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+            .form-grid textarea,
+            .btn-submit {
+                grid-column: span 1;
+            }
+            .footer {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .servicios-carrusel-wrapper {
+                width: 92vw;
+                max-width: 340px;
+            }
+            .card-overlay {
+                padding: 1.5rem 1.2rem 1rem;
+            }
+            .card-overlay h3 {
+                font-size: 0.9rem;
+            }
+            .card-overlay .desc {
+                font-size: 0.6rem;
+            }
+            .card-overlay .btn-consultar {
+                font-size: 0.5rem;
+                padding: 0.35rem 0.8rem;
+            }
+            .card-overlay .badge-servicio {
+                font-size: 0.45rem;
+            }
+            .card-dots {
+                top: 0.6rem;
+                right: 0.6rem;
+            }
+            .card-dot {
+                width: 4px;
+                height: 4px;
+            }
+            .card-dot.active {
+                width: 10px;
+            }
+
+            .chat-float {
+                bottom: 6rem;
+                right: 0.8rem;
+                gap: 0.5rem;
+            }
+            .chat-float a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.7rem;
+            }
+            .back-to-top {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+            .hero-content h1 {
+                font-size: 1.7rem;
+            }
+            .hero-content .subtitle {
+                font-size: 0.65rem;
+            }
+            .hero-content .description {
+                font-size: 0.85rem;
+            }
+            .servicios-carrusel-wrapper {
+                width: 94vw;
+                max-width: 320px;
+            }
+            .card-overlay {
+                padding: 1.2rem 1rem 0.8rem;
+            }
+            .card-overlay h3 {
+                font-size: 0.8rem;
+            }
+            .card-overlay .desc {
+                font-size: 0.55rem;
+            }
+            .card-overlay .btn-consultar {
+                font-size: 0.45rem;
+                padding: 0.3rem 0.6rem;
+            }
+            .card-overlay .badge-servicio {
+                font-size: 0.4rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+            .stat-number {
+                font-size: 2.2rem;
+            }
+            .chat-float {
+                bottom: 5rem;
+                right: 0.5rem;
+                gap: 0.4rem;
+            }
+            .chat-float a {
+                font-size: 0.6rem;
+                padding: 0.3rem 0.6rem;
+            }
+            .chat-float a .label {
+                font-size: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+
+    <!-- ====== NAVBAR ====== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="monogram">ED</span>
+                <span>Estudio Digital NEA</span>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#">Inicio</a>
+                <a href="#">Soluciones</a>
+                <a href="#">Cómo trabajamos</a>
+                <a href="#">Nosotros</a>
+                <a href="#">Tecnologías</a>
+                <a href="#">FAQ</a>
+                <a href="#">Contacto</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                    <span id="themeIcon">🌙</span>
+                </button>
+                <button class="btn-primary" id="btnPresupuesto">Solicitar Presupuesto</button>
+                <button class="hamburger" id="hamburger" aria-label="Menú">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="#">Inicio</a>
+                <a href="#">Soluciones</a>
+                <a href="#">Cómo trabajamos</a>
+                <a href="#">Nosotros</a>
+                <a href="#">Tecnologías</a>
+                <a href="#">FAQ</a>
+                <a href="#">Contacto</a>
+                <button class="btn-primary" style="width:100%;justify-content:center;margin-top:0.5rem;">Solicitar Presupuesto</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ====== HERO ====== -->
+    <section class="hero">
+        <div class="hero-background">
+            <img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783763980/Copilot_20260711_051100_qkowl9.png" alt="Puente General Belgrano - Corrientes" />
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">✦ Región NEA</div>
+                <h1>Tecnología para la <span class="highlight">nueva generación</span> de estudios profesionales</h1>
+                <p class="subtitle">⚖️ Estudio Digital NEA · Software Inteligente</p>
+                <p class="description">Diseñamos páginas web, software y soluciones inteligentes para abogados, escribanos y contadores que buscan modernizar su estudio.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary">Solicitar Presupuesto</button>
+                    <button class="btn-outline">Agendar Reunión</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SERVICIOS CON CARRUSEL ====== -->
+    <section class="servicios-section">
+        <div class="container">
+            <h2 class="section-title">Nuestros Servicios</h2>
+            <p class="section-subtitle">Soluciones tecnológicas diseñadas para cada necesidad de tu estudio profesional.</p>
+
+            <div class="servicios-carrusel-wrapper">
+                <div class="servicios-carrusel-track" id="carruselTrack">
+
+                    <!-- SERVICIO 1: Landing Pages Premium -->
+                    <div class="servicio-card" data-link="/landing-abogados">
+                        <div class="card-slideshow" data-interval="4000">
+                            <div class="card-slide active"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903319/Screenshot_20260711-031317_le6uro.jpg" alt="Landing 1" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903319/Screenshot_20260711-031441_kjaqzz.jpg" alt="Landing 2" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903320/Screenshot_20260711-031401_b350vf.jpg" alt="Landing 3" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903319/Screenshot_20260711-031505_bd6e5x.jpg" alt="Landing 4" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903320/Screenshot_20260711-031555_txiwx9.jpg" alt="Landing 5" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903320/Screenshot_20260711-031616_m9bykw.jpg" alt="Landing 6" /></div>
+                            <div class="card-dots">
+                                <span class="card-dot active"></span><span class="card-dot"></span>
+                                <span class="card-dot"></span><span class="card-dot"></span>
+                                <span class="card-dot"></span><span class="card-dot"></span>
+                            </div>
+                            <div class="card-overlay">
+                                <span class="badge-servicio">✦ Landing Pages</span>
+                                <h3>Landing Pages Premium</h3>
+                                <p class="desc">Diseños modernos que generan consultas y transmiten confianza.</p>
+                                <button class="btn-consultar" onclick="event.stopPropagation(); window.location.href='/landing-abogados'">
+                                    Consultar <span class="arrow">→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SERVICIO 2: Sitios Web Corporativos -->
+                    <div class="servicio-card" data-link="/sitios-web">
+                        <div class="card-slideshow" data-interval="4000">
+                            <div class="card-slide active"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903627/Screenshot_20260711-212906_kc9nze.jpg" alt="Sitio 1" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903627/Screenshot_20260711-212940_dg8c11.jpg" alt="Sitio 2" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903627/Screenshot_20260711-213002_qswfup.jpg" alt="Sitio 3" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903628/Screenshot_20260711-213053_hfp2u0.jpg" alt="Sitio 4" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903628/Screenshot_20260711-213130_wdffuw.jpg" alt="Sitio 5" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903628/Screenshot_20260711-213102_pqpzlf.jpg" alt="Sitio 6" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903633/Screenshot_20260711-213139_dxyw0s.jpg" alt="Sitio 7" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903633/Screenshot_20260711-213317_yjcqyy.jpg" alt="Sitio 8" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903634/Screenshot_20260711-213339_vamn8s.jpg" alt="Sitio 9" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903634/Screenshot_20260711-213354_afkrzs.jpg" alt="Sitio 10" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783903637/Screenshot_20260711-213406_ctfp6q.jpg" alt="Sitio 11" /></div>
+                            <div class="card-dots">
+                                <span class="card-dot active"></span><span class="card-dot"></span><span class="card-dot"></span>
+                                <span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span>
+                                <span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span>
+                                <span class="card-dot"></span><span class="card-dot"></span>
+                            </div>
+                            <div class="card-overlay">
+                                <span class="badge-servicio">✦ Sitios Web</span>
+                                <h3>Sitios Web Corporativos</h3>
+                                <p class="desc">Sitios profesionales para estudios jurídicos, notariales y contables.</p>
+                                <button class="btn-consultar" onclick="event.stopPropagation(); window.location.href='/sitios-web'">
+                                    Consultar <span class="arrow">→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SERVICIO 3: Software a Medida -->
+                    <div class="servicio-card" data-link="/software-medida">
+                        <div class="card-slideshow" data-interval="4000">
+                            <div class="card-slide active"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904092/Screenshot_20260711-032348_irxgck.jpg" alt="Software 1" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904092/Screenshot_20260711-032430_qjthek.jpg" alt="Software 2" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904092/Screenshot_20260711-032430_qjthek.jpg" alt="Software 3" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904093/Screenshot_20260711-032508_e8hfr4.jpg" alt="Software 4" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904093/Screenshot_20260711-032543_pukbou.jpg" alt="Software 5" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904093/Screenshot_20260711-032552_ajtm0e.jpg" alt="Software 6" /></div>
+                            <div class="card-dots">
+                                <span class="card-dot active"></span><span class="card-dot"></span><span class="card-dot"></span>
+                                <span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span>
+                            </div>
+                            <div class="card-overlay">
+                                <span class="badge-servicio">✦ Software</span>
+                                <h3>Software a Medida</h3>
+                                <p class="desc">Plataformas adaptadas a las necesidades específicas de cada estudio.</p>
+                                <button class="btn-consultar" onclick="event.stopPropagation(); window.location.href='/software-medida'">
+                                    Consultar <span class="arrow">→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SERVICIO 4: Automatización e IA -->
+                    <div class="servicio-card" data-link="/lexai">
+                        <div class="card-slideshow" data-interval="4000">
+                            <div class="card-slide active"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904323/Screenshot_20260711-210051_fzuh9v.jpg" alt="IA 1" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904324/Screenshot_20260711-210108_s6hfww.jpg" alt="IA 2" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904324/Screenshot_20260711-210120_nhhsjl.jpg" alt="IA 3" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904325/Screenshot_20260711-210135_wywpta.jpg" alt="IA 4" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904329/Screenshot_20260711-210150_cvnlg2.jpg" alt="IA 5" /></div>
+                            <div class="card-dots">
+                                <span class="card-dot active"></span><span class="card-dot"></span>
+                                <span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span>
+                            </div>
+                            <div class="card-overlay">
+                                <span class="badge-servicio">✦ IA & Automatización</span>
+                                <h3>Automatización e IA</h3>
+                                <p class="desc">Asistentes inteligentes, formularios automáticos y flujos optimizados.</p>
+                                <button class="btn-consultar" onclick="event.stopPropagation(); window.location.href='/lexai'">
+                                    Consultar <span class="arrow">→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SERVICIO 5: Soporte y Evolución -->
+                    <div class="servicio-card" data-link="/soporte">
+                        <div class="card-slideshow" data-interval="4000">
+                            <div class="card-slide active"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904907/Screenshot_20260711-211134_ff3abh.jpg" alt="Soporte 1" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904906/Screenshot_20260711-210748_vpxwer.jpg" alt="Soporte 2" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904907/Screenshot_20260711-210853_itfaok.jpg" alt="Soporte 3" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904906/Screenshot_20260711-210827_zsxzqr.jpg" alt="Soporte 4" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904907/Screenshot_20260711-211153_flffgg.jpg" alt="Soporte 5" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904907/Screenshot_20260711-211243_z3khov.jpg" alt="Soporte 6" /></div>
+                            <div class="card-slide"><img src="https://res.cloudinary.com/ds2udm1nc/image/upload/v1783904907/Screenshot_20260711-211313_zepkhl.jpg" alt="Soporte 7" /></div>
+                            <div class="card-dots">
+                                <span class="card-dot active"></span><span class="card-dot"></span><span class="card-dot"></span>
+                                <span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span><span class="card-dot"></span>
+                            </div>
+                            <div class="card-overlay">
+                                <span class="badge-servicio">✦ Soporte</span>
+                                <h3>Soporte y Evolución</h3>
+                                <p class="desc">Mantenimiento, actualizaciones y evoluciones para tu estudio.</p>
+                                <button class="btn-consultar" onclick="event.stopPropagation(); window.location.href='/soporte'">
+                                    Consultar <span class="arrow">→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Controles del carrusel general -->
+            <div class="carrusel-controls">
+                <button class="carrusel-btn" id="prevBtn">‹</button>
+                <div class="carrusel-dots" id="carruselDots"></div>
+                <button class="carrusel-btn" id="nextBtn">›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== DIRIGIDO ====== -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">¿A quién está dirigido?</h2>
+            <div class="bento-grid">
+                <div class="bento-card">
+                    <div class="icon-big">⚖️</div>
+                    <h3>Abogados</h3>
+                    <p>Sitios web profesionales, gestión de clientes, expedientes, automatización, consultas online, IA, agenda, portal de clientes.</p>
+                </div>
+                <div class="bento-card">
+                    <div class="icon-big">🖋️</div>
+                    <h3>Escribanos</h3>
+                    <p>Sitios institucionales, solicitud de turnos, gestión documental, formularios inteligentes, automatización, seguimiento de trámites.</p>
+                </div>
+                <div class="bento-card">
+                    <div class="icon-big">📊</div>
+                    <h3>Contadores Públicos</h3>
+                    <p>Sitios corporativos, portal para clientes, carga de documentación, recordatorios automáticos, automatización, panel administrativo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SOLUCIONES ORIGINALES ====== -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Nuestras soluciones</h2>
+            <div class="bento-grid">
+                <div class="bento-card">
+                    <h3>Landing Pages Premium</h3>
+                    <p>Diseños modernos orientados a generar consultas y transmitir confianza.</p>
+                </div>
+                <div class="bento-card">
+                    <h3>Sitios Web Corporativos</h3>
+                    <p>Profesionales completamente personalizados para estudios jurídicos, notariales y contables.</p>
+                </div>
+                <div class="bento-card">
+                    <h3>Software a Medida</h3>
+                    <p>Plataformas web adaptadas a las necesidades específicas de cada estudio.</p>
+                </div>
+                <div class="bento-card">
+                    <h3>Automatización Inteligente</h3>
+                    <p>Formularios, integraciones, flujos de trabajo y asistentes inteligentes.</p>
+                </div>
+                <div class="bento-card">
+                    <h3>Inteligencia Artificial</h3>
+                    <p>Asistentes con IA para responder consultas, organizar información y mejorar productividad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== ESTADÍSTICAS ====== -->
+    <section>
+        <div class="container stats-grid">
+            <div><div class="stat-number">+500</div><div class="stat-label">Proyectos</div></div>
+            <div><div class="stat-number">+300</div><div class="stat-label">Clientes</div></div>
+            <div><div class="stat-number">98%</div><div class="stat-label">Satisfacción</div></div>
+            <div><div class="stat-number">24h</div><div class="stat-label">Respuesta</div></div>
+        </div>
+    </section>
+
+    <!-- ====== TESTIMONIOS ====== -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+            <p class="section-subtitle">Historias reales de estudios que transformaron su forma de trabajar con nuestra tecnología.</p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <span class="testimonial-icon">⚖️</span>
+                        <div>
+                            <div class="testimonial-name">Dr. Martín Rodríguez</div>
+                            <div class="testimonial-role">Estudio Jurídico Rodríguez & Asoc.</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Nuestra productividad aumentó un 40% en solo 3 meses. El sistema de gestión de expedientes y el portal de clientes nos permitió optimizar todos nuestros procesos internos."</p>
+                    <div class="testimonial-result"><span class="result-badge">📈 +40% productividad</span></div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <span class="testimonial-icon">🖋️</span>
+                        <div>
+                            <div class="testimonial-name">Escribana Laura Pérez</div>
+                            <div class="testimonial-role">Pérez & Asociados</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Redujimos los tiempos de espera de nuestros clientes en un 70% gracias al sistema de solicitud de turnos y la gestión documental automatizada."</p>
+                    <div class="testimonial-result"><span class="result-badge">⏱️ -70% tiempo de espera</span></div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <span class="testimonial-icon">📊</span>
+                        <div>
+                            <div class="testimonial-name">CPN Carlos González</div>
+                            <div class="testimonial-role">González & Asociados</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Ahora gestionamos el doble de clientes con el mismo equipo. La automatización de recordatorios y el portal de clientes nos ahorra horas de trabajo semanales."</p>
+                    <div class="testimonial-result"><span class="result-badge">📈 +200% clientes atendidos</span></div>
+                </div>
+            </div>
+
+            <h3 style="color:var(--text-primary);font-size:1.8rem;margin-bottom:2rem;text-align:center;font-weight:600;letter-spacing:-0.02em;transition:color 0.4s ease;">Casos de éxito en números</h3>
+            <div class="success-grid">
+                <div class="success-card"><div class="success-number">+40%</div><div class="success-label">Aumento de productividad</div><div class="success-desc">Estudios jurídicos</div></div>
+                <div class="success-card"><div class="success-number">-70%</div><div class="success-label">Reducción de tiempos</div><div class="success-desc">Gestión notarial</div></div>
+                <div class="success-card"><div class="success-number">+200%</div><div class="success-label">Clientes atendidos</div><div class="success-desc">Estudios contables</div></div>
+                <div class="success-card"><div class="success-number">98%</div><div class="success-label">Satisfacción</div><div class="success-desc">Encuestas post-implementación</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== FAQ ====== -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Preguntas Frecuentes</h2>
+            <div id="faqContainer">
+                <div class="faq-item"><div class="faq-question">¿Qué incluye una landing page premium? <span>+</span></div><div class="faq-answer">Diseño personalizado, optimización SEO, formularios de captación, integración con CRM y analíticas.</div></div>
+                <div class="faq-item"><div class="faq-question">¿Desarrollan software a medida? <span>+</span></div><div class="faq-answer">Sí, creamos plataformas web adaptadas a flujos de trabajo específicos de abogados, escribanos y contadores.</div></div>
+                <div class="faq-item"><div class="faq-question">¿Integran inteligencia artificial? <span>+</span></div><div class="faq-answer">Contamos con asistentes IA para responder consultas, automatizar tareas y organizar información.</div></div>
+                <div class="faq-item"><div class="faq-question">¿Qué tecnologías utilizan? <span>+</span></div><div class="faq-answer">React, Next.js, Node, PostgreSQL, Supabase, OpenAI, Claude, y más.</div></div>
+                <div class="faq-item"><div class="faq-question">¿Ofrecen soporte post-lanzamiento? <span>+</span></div><div class="faq-answer">Sí, mantenimiento, actualizaciones y soporte continuo.</div></div>
+                <div class="faq-item"><div class="faq-question">¿Cuánto tiempo lleva desarrollar un sitio web? <span>+</span></div><div class="faq-answer">Depende de la complejidad. Una landing page puede estar lista en 2-3 semanas, mientras que un software a medida puede tomar 2-3 meses.</div></div>
+                <div class="faq-item"><div class="faq-question">¿Trabajan con metodologías ágiles? <span>+</span></div><div class="faq-answer">Sí, utilizamos Scrum y entregas iterativas para asegurar que el producto final cumpla con las expectativas.</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== CTA FINAL ====== -->
+    <section style="border-bottom:none;">
+        <div class="container glass" style="padding:4rem 3rem;text-align:center;">
+            <h2 style="font-size:3rem;font-weight:600;letter-spacing:-0.02em;color:var(--text-primary);transition:color 0.4s ease;">Transforme su estudio con tecnología diseñada para el futuro.</h2>
+            <div style="display:flex;gap:1.5rem;justify-content:center;margin-top:2.5rem;flex-wrap:wrap;">
+                <button class="btn-primary" style="padding:1rem 3rem;">Solicitar Presupuesto</button>
+                <button class="btn-outline">WhatsApp</button>
+                <button class="btn-outline">Agendar Reunión</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== FORMULARIO ====== -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Contacto</h2>
+            <form class="form-grid">
+                <input type="text" placeholder="Nombre" />
+                <input type="text" placeholder="Apellido" />
+                <input type="text" placeholder="Profesión" />
+                <input type="text" placeholder="Empresa" />
+                <input type="email" placeholder="Email" />
+                <input type="text" placeholder="WhatsApp" />
+                <input type="text" placeholder="Ciudad" />
+                <input type="text" placeholder="Provincia" />
+                <select>
+                    <option>Tipo de proyecto</option>
+                    <option>Landing Page</option>
+                    <option>Sitio corporativo</option>
+                    <option>Software a medida</option>
+                </select>
+                <textarea rows="3" placeholder="Mensaje"></textarea>
+                <button class="btn-submit">Enviar</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="container footer">
+        <div>
+            <div class="logo" style="margin-bottom:1rem;">
+                <span class="monogram">ED</span>
+                <span>Estudio Digital NEA</span>
+            </div>
+            <p class="text-soft" style="max-width:260px;">Software inteligente para profesionales. Tecnología de vanguardia.</p>
+            <div class="social-icons">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div>
+            <h4 style="color:var(--text-primary);margin-bottom:0.8rem;transition:color 0.4s ease;">Soluciones</h4>
+            <a href="#">Landing</a><br /><a href="#">Sitios</a><br /><a href="#">Software</a>
+        </div>
+        <div>
+            <h4 style="color:var(--text-primary);margin-bottom:0.8rem;transition:color 0.4s ease;">Tecnologías</h4>
+            <a href="#">React</a><br /><a href="#">Next.js</a><br /><a href="#">Supabase</a>
+        </div>
+        <div>
+            <h4 style="color:var(--text-primary);margin-bottom:0.8rem;transition:color 0.4s ease;">Contacto</h4>
+            <a href="#">WhatsApp</a><br /><a href="#">Email</a><br /><a href="#">Ubicación</a>
+        </div>
+    </footer>
+    <div class="footer-bottom" style="text-align:center;padding:1.5rem 0;border-top:1px solid rgba(255,255,255,0.02);font-size:0.8rem;color:#4a5f6b;transition:border-color 0.4s ease,color 0.4s ease;">
+        Política de privacidad · Cookies · Términos · Mapa del sitio
+    </div>
+
+    <!-- ====== BACK TO TOP ====== -->
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <!-- ====== CHAT FLOATING ====== -->
+    <div class="chat-float">
+        <a href="#"><span class="emoji">💬</span><span class="label">WhatsApp</span></a>
+        <a href="#"><span class="emoji">📞</span><span class="label">Llamar</span></a>
+        <a href="#"><span class="emoji">✉️</span><span class="label">Email</span></a>
+    </div>
+
+    <!-- ====== SCRIPTS ====== -->
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeIcon.textContent = theme === 'light' ? '☀️' : '🌙';
+        }
+
+        if (localStorage.getItem('theme')) {
+            setTheme(localStorage.getItem('theme'));
+        } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+            setTheme('light');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            setTheme(current === 'light' ? 'dark' : 'light');
+        });
+
+        // Hamburger
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('active');
+            mobileMenu.classList.toggle('open');
+        });
+
+        mobileMenu.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('open');
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('open');
+            }
+        });
+
+        // ====== CARRUSEL GENERAL - SLIDER PREMIUM ======
+        const track = document.getElementById('carruselTrack');
+        const cards = track.querySelectorAll('.servicio-card');
+        const totalCards = cards.length;
+        let currentIndex = 0;
+        let autoSlideInterval;
+
+        function goToSlide(index) {
+            const maxIndex = totalCards - 1;
+            currentIndex = Math.min(Math.max(0, index), maxIndex);
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+            const dots = document.querySelectorAll('.carrusel-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        function createDots() {
+            const dotsContainer = document.getElementById('carruselDots');
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalCards; i++) {
+                const dot = document.createElement('span');
+                dot.className = 'carrusel-dot' + (i === 0 ? ' active' : '');
+                dot.addEventListener('click', () => {
+                    clearInterval(autoSlideInterval);
+                    goToSlide(i);
+                    startAutoSlide();
+                });
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function startAutoSlide() {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = setInterval(() => {
+                if (currentIndex >= totalCards - 1) {
+                    goToSlide(0);
+                } else {
+                    goToSlide(currentIndex + 1);
+                }
+            }, 8000);
+        }
+
+        function initCarrusel() {
+            createDots();
+            goToSlide(0);
+            startAutoSlide();
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            clearInterval(autoSlideInterval);
+            if (currentIndex <= 0) {
+                goToSlide(totalCards - 1);
+            } else {
+                goToSlide(currentIndex - 1);
+            }
+            startAutoSlide();
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            clearInterval(autoSlideInterval);
+            if (currentIndex >= totalCards - 1) {
+                goToSlide(0);
+            } else {
+                goToSlide(currentIndex + 1);
+            }
+            startAutoSlide();
+        });
+
+        const carruselWrapper = document.querySelector('.servicios-carrusel-wrapper');
+        carruselWrapper.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+        carruselWrapper.addEventListener('mouseleave', startAutoSlide);
+
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                goToSlide(currentIndex);
+            }, 250);
+        });
+
+        initCarrusel();
+
+        // ====== SLIDESHOW FADE DENTRO DE CADA CARD ======
+        document.querySelectorAll('.card-slideshow').forEach(container => {
+            const slides = container.querySelectorAll('.card-slide');
+            const dots = container.querySelectorAll('.card-dot');
+            let current = 0;
+            const total = slides.length;
+            const interval = parseInt(container.getAttribute('data-interval')) || 3500;
+
+            function goTo(index) {
+                slides.forEach(s => s.classList.remove('active'));
+                dots.forEach(d => d.classList.remove('active'));
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+            }
+
+            function nextSlide() {
+                current = (current + 1) % total;
+                goTo(current);
+            }
+
+            let auto = setInterval(nextSlide, interval);
+
+            const card = container.closest('.servicio-card');
+            card.addEventListener('mouseenter', () => clearInterval(auto));
+            card.addEventListener('mouseleave', () => {
+                auto = setInterval(nextSlide, interval);
+            });
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    clearInterval(auto);
+                    current = index;
+                    goTo(current);
+                    auto = setInterval(nextSlide, interval);
+                });
+            });
+        });
+
+        // ====== FAQ ======
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.toggle('open');
+            });
+        });
+
+        // ====== BACK TO TOP ======
+        const backBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) backBtn.classList.add('visible');
+            else backBtn.classList.remove('visible');
+        });
+        backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // ====== SCROLL REVEAL ======
+        const revealCards = document.querySelectorAll('.testimonial-card, .success-card, .bento-card, .servicio-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
